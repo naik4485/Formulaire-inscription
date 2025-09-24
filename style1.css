@@ -1,0 +1,245 @@
+/* ================= BASE ================= */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f8f8f8;
+  color: #222;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: auto;            /* adapte la taille du logo */
+      height: 100px;
+      margin-right: 20px;      /* espace entre le logo et le texte */
+    }
+
+.header h1 {
+      flex: 1;                 /* occupe tout l’espace restant */
+      text-align: center;      /* centre le texte dans le trou à droite */
+      margin: 0;               /* enlève la marge par défaut du h1 */
+      font-size: 1.5em;
+      line-height: 1.4;
+	  color: #e91e63;
+    }
+
+h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #e91e63;
+  border-bottom: 2px solid #e91e63;
+  padding-bottom: 5px;
+}
+h3 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  color: #e91e63;
+}
+
+.intro {
+  font-size: 12px;
+}
+
+/* ================= FORM SELECTOR ================= */
+.form-selector {
+  margin: 10px 0;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.form-selector label {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.form-selector input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* ================= FORM GRID ================= */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.full {
+  grid-column: span 2;
+}
+
+label {
+  font-size: 14px;
+}
+.grid label {
+  display: block;
+}
+
+input, select, textarea {
+  padding: 5px;
+  width: 100%;
+  margin-top: 3px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.block {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+}
+.hidden {
+  display: none;
+}
+
+/* ================= CONSENTEMENTS (FIX ROBUSTE) ================= */
+/* conteneur */
+.block-consents {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+/* espace entre éléments */
+.consent-item {
+  margin-bottom: 16px;
+}
+
+/* on cible spécifiquement les labels de consentement :
+   - forcer l'affichage en flex (ou grid si besoin) ;
+   - afficher le texte en colonne (titre / description) ;
+   - permettre au texte de se réduire avec min-width:0 (clé pour éviter l'empilement). */
+label.consent-row {
+  display: flex !important;       /* écrase d'autres règles */
+  flex-direction: row;
+  align-items: flex-start;        /* aligne la case avec la première ligne du texte */
+  gap: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* checkbox : ne se réduit pas */
+label.consent-row input[type="checkbox"] {
+  margin: 4px 0 0 0;   /* ajuste verticalement la case */
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+}
+
+/* le conteneur texte : colonne, peut rétrécir (min-width:0) */
+label.consent-row .consent-text {
+  display: flex;
+  flex-direction: column; /* strong sur la 1re ligne, p sur la 2e */
+  flex: 1 1 auto;
+  min-width: 0;           /* <<- IMPORTANT : permet le wrapping correct du texte */
+  text-align: left;
+}
+
+/* titre en gras aligné sur la case */
+label.consent-row .consent-text strong {
+  display: block;
+  margin-bottom: 4px;
+  line-height: 1.1;
+}
+
+/* description */
+label.consent-row .consent-text p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* sécurité : si un autre style force des largeurs, on permet au contenu de montrer correctement */
+label.consent-row * {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+/* ================= TABLEAU SANTÉ ================= */
+.health-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.health-table td, .health-table th {
+  border: 1px solid #999;
+  padding: 6px;
+  vertical-align: top;
+}
+.health-table th {
+  text-align: center;
+}
+.section-title {
+  background: #e91e63;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ================= SIGNATURE ================= */
+canvas {
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: crosshair;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-primary {
+  background: #e91e63;
+  color: white;
+}
+.btn-secondary {
+  background: #ccc;
+}
+
+.center {
+  text-align: center;
+}
+.bold {
+  font-weight: bold;
+}
+.signatures-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.signature-col {
+  flex: 1;
+}
+
+.signature-box {
+  border: 1px solid #000;
+  height: 60px; /* réduit légèrement pour gagner de la place */
+  margin-top: 5px;
+}

@@ -49,7 +49,7 @@
       <div class="consent-text">
         <strong>Données personnelles</strong>
         <p>En cochant cette case et en soumettant ce formulaire, j'accepte que les informations saisies
-        soient utilisées par le Hockey Club de Savenay pour me recontacter…</p>
+        soient utilisées par le Hockey Club de Savenay pour me recontacter dans le cadre de la relation qui découle de ma demande. Ces informations ne sont pas partagées ni revendues à des tiers.</p>
       </div>
     </label>
   </div>
@@ -69,8 +69,7 @@
       <input type="checkbox" id="droit_image" name="droit_image">
       <div class="consent-text">
         <strong>Droit à l’image</strong>
-        <p>Pour les saisons sportives où je suis licencié au club, j’autorise le Hockey Club de Savenay
-        à utiliser les photographies/vidéos prises dans le cadre associatif.</p>
+        <p>Pour les saisons sportives je suis licencié au club, l’association Hockey Club de Savenay aura l’occasion de prendre des photographies, des vidéos et des captations numériques. En conséquence de quoi et conformément aux dispositions relatives au droit à l’image, j’autorise le Hockey Club de Savenay à fixer, reproduire et communiquer au public les photographies, vidéos ou captations numériques prises dans le cadre associatif. Les images pourront être exploitées et utilisées directement par l’association sous toute forme et tous supports connus et inconnus à ce jour, pour un territoire illimité, sans limitation de durée, intégralement ou par extraits et notamment : presse, livret, supports d’enregistrement numérique, site internet, réseaux sociaux et tout dispositif de communication en général. Le bénéficiaire de l’autorisation s’interdit expressément de procéder à une exploitation des photographies susceptible de porter atteinte à la vie privée ou à la réputation, et d’utiliser les photographies, vidéos ou captations numériques de la présente, dans tout support ou toute exploitation préjudiciable.</p>
       </div>
     </label>
   </div>
@@ -81,14 +80,20 @@
         <h2>Questionnaire santé adulte (pour un renouvellement de licence)</h2>
 		  <h3>Pour une nouvelle inscription, le certificat médical est obligatoire</h3>
         <table class="health-table">
-          <thead><tr><th>Question</th><th>OUI</th><th>NON</th></tr></thead>
+          <thead><tr><th>Répondez aux questions suivantes par OUI ou par NON *</th><th>OUI</th><th>NON</th></tr></thead>
           <tbody>
-            <tr><td>Avez-vous été hospitalisé ou opéré ?</td><td><input type="radio" name="qa1" value="oui"></td><td><input type="radio" name="qa1" value="non"></td></tr>
-            <tr><td>Avez-vous eu des malaises ou pertes de connaissance ?</td><td><input type="radio" name="qa2" value="oui"></td><td><input type="radio" name="qa2" value="non"></td></tr>
-            <tr><td>Avez-vous ressenti une douleur dans la poitrine ou des palpitations ?</td><td><input type="radio" name="qa3" value="oui"></td><td><input type="radio" name="qa3" value="non"></td></tr>
-            <tr><td>Avez-vous un traitement quotidien au long cours ?</td><td><input type="radio" name="qa4" value="oui"></td><td><input type="radio" name="qa4" value="non"></td></tr>
-            <tr><td>Avez-vous arrêté le sport suite à un problème de santé ?</td><td><input type="radio" name="qa5" value="oui"></td><td><input type="radio" name="qa5" value="non"></td></tr>
-          </tbody>
+		    <tr class="section-title" style="background-color:#e91e63"><td colspan="3" style="text-align:center;"><strong>Durant les 12 derniers mois</strong></td></tr>
+            <tr><td>Un membre de votre famille est-il décédé subitement d’une cause cardiaque ou inexpliqué ?</td><td><input type="radio" name="qa1" value="oui"></td><td><input type="radio" name="qa1" value="non"></td></tr>
+            <tr><td>Avez-vous ressenti une douleur dans la poitrine, des palpitations, un essoufflement inhabituel ou un malaise ?</td><td><input type="radio" name="qa2" value="oui"></td><td><input type="radio" name="qa2" value="non"></td></tr>
+            <tr><td>Avez-vous eu un épisode de respiration sifflante (asthme) ?</td><td><input type="radio" name="qa3" value="oui"></td><td><input type="radio" name="qa3" value="non"></td></tr>
+            <tr><td>Avous-vous eu une perte de connaissance ?</td><td><input type="radio" name="qa4" value="oui"></td><td><input type="radio" name="qa4" value="non"></td></tr>
+            <tr><td>Si vous avez arrêté le sport pendant 30 jours ou plus pour des raisons de santé, avez-vous repris sans l’accord d’un médecin ?</td><td><input type="radio" name="qa5" value="oui"></td><td><input type="radio" name="qa5" value="non"></td></tr>
+            <tr><td>Avez-vous débuté un traitement médical de longue durée (hors contraception et désensibilisation aux allergies) ?</td><td><input type="radio" name="qa6" value="oui"></td><td><input type="radio" name="qa6" value="non"></td></tr>
+            <tr class="section-title" style="background-color:#e91e63"><td colspan="3" style="text-align:center;"><strong>A ce jour</strong></td></tr>
+			<tr><td>Ressentez-vous une douleur, un manque de force ou une raideur suite à un problème osseux, articulaire ou musculaire (fracture, entorse, luxation, déchirure, tendinite, etc…) survenu durant les 12 derniers mois ?</td><td><input type="radio" name="qa7" value="oui"></td><td><input type="radio" name="qa7" value="non"></td></tr>
+            <tr><td>Votre pratique sportive est-elle interrompue pour des raisons de santé ?</td><td><input type="radio" name="qa8" value="oui"></td><td><input type="radio" name="qa8" value="non"></td></tr>
+            <tr><td>Pensez-vous avoir besoin d’un avis médical pour poursuivre votre pratique sportive ?</td><td><input type="radio" name="qa9" value="oui"></td><td><input type="radio" name="qa9" value="non"></td></tr>
+		  </tbody>
         </table>
         <div class="info-box">
           Si vous avez répondu NON à toutes les questions → pas besoin de certificat médical.<br>
@@ -529,6 +534,7 @@
 </script>
 </body>
 </html>
+
 
 
 

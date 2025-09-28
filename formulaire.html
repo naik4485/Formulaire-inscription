@@ -320,29 +320,58 @@
 
   // Signature handling (simple)
   function initCanvas(id) {
-    const canvas = document.getElementById(id);
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let drawing = false;
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = "#000";
-    let lastX = 0, lastY = 0;
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  let lastX = 0, lastY = 0;
 
-    canvas.addEventListener('mousedown', (e) => {
-      drawing = true;
-      [lastX, lastY] = [e.offsetX, e.offsetY];
-    });
-    canvas.addEventListener('mouseup', () => drawing = false);
-    canvas.addEventListener('mousemove', (e) => {
-      if (!drawing) return;
-      ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
-      ctx.lineTo(e.offsetX, e.offsetY);
-      ctx.stroke();
-      [lastX, lastY] = [e.offsetX, e.offsetY];
-    });
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = "#000";
+
+  // -------- Souris --------
+  canvas.addEventListener('mousedown', (e) => {
+    drawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+  });
+  canvas.addEventListener('mouseup', () => drawing = false);
+  canvas.addEventListener('mouseout', () => drawing = false);
+  canvas.addEventListener('mousemove', (e) => {
+    if (!drawing) return;
+    drawLine(e.offsetX, e.offsetY);
+  });
+
+  // -------- Tactile (mobile) --------
+  canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // empêche le scroll
+    drawing = true;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    lastX = touch.clientX - rect.left;
+    lastY = touch.clientY - rect.top;
+  });
+  canvas.addEventListener('touchend', () => drawing = false);
+  canvas.addEventListener('touchcancel', () => drawing = false);
+  canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    if (!drawing) return;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    drawLine(x, y);
+  });
+
+  // -------- Fonction de tracé --------
+  function drawLine(x, y) {
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    [lastX, lastY] = [x, y];
   }
+}
   ['signatureAdulte','signatureEnfant','signatureRL'].forEach(initCanvas);
 
   function clearSignature(id) {
@@ -544,6 +573,7 @@
 </script>
 </body>
 </html>
+
 
 
 

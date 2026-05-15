@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inscription - Hockey Club de Savenay</title>
+
+  <link rel="stylesheet" href="style1.css">
+
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- AutoTable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    canvas {
+      border: 1px solid #999;
+      touch-action: none;
+    }
+
+    .block {
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .full {
+      grid-column: 1 / span 2;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+    }
+
+    input,
+    select {
+      padding: 6px;
+      margin-top: 4px;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Formulaire d'inscription Hockey Club de Savenay</h1>
+
+  <div class="form-selector">
+    <label>
+      <input type="radio" name="formChoice" value="adulte" checked>
+      Formulaire adulte
+    </label>
+
+    <label>
+      <input type="radio" name="formChoice" value="enfant">
+      Formulaire enfant
+    </label>
+  </div>
+
+  <!-- ================= ADULTE ================= -->
+
+  <div id="form-adulte">
+
+    <div class="block">
+      <h2>Identité</h2>
+
+      <div class="grid">
+
+        <label>
+          Nom
+          <input type="text" id="nom_adulte">
+        </label>
+
+        <label>
+          Prénom
+          <input type="text" id="prenom_adulte">
+        </label>
+
+        <label>
+          Date de naissance
+          <input type="date" id="date_naissance_adulte">
+        </label>
+
+        <label>
+          Sexe
+          <select id="sexe_adulte">
+            <option>-</option>
+            <option>Homme</option>
+            <option>Femme</option>
+          </select>
+        </label>
+
+        <label class="full">
+          Adresse
+          <input type="text" id="adresse_adulte">
+        </label>
+
+        <label>
+          Code Postal
+          <input type="text" id="cp_adulte">
+        </label>
+
+        <label>
+          Ville
+          <input type="text" id="ville_adulte">
+        </label>
+
+        <label>
+          Email
+          <input type="email" id="email_adulte">
+        </label>
+
+        <label>
+          Téléphone
+          <input type="tel" id="tel_adulte">
+        </label>
+
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>Consentements</h2>
+
+      <label>
+        <input type="checkbox" id="donnees">
+        Données personnelles acceptées
+      </label>
+
+      <label>
+        <input type="checkbox" id="charte">
+        Charte acceptée
+      </label>
+
+      <label>
+        <input type="checkbox" id="droit_image">
+        Droit à l'image accepté
+      </label>
+    </div>
+
+    <div class="block">
+      <h2>Questionnaire santé</h2>
+
+      <table border="1" width="100%" id="healthTable">
+        <tr>
+          <th>Question</th>
+          <th>Réponse</th>
+        </tr>
+
+        <tr>
+          <td>Douleur poitrine</td>
+          <td>
+            <select id="qa1">
+              <option>Non</option>
+              <option>Oui</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Asthme</td>
+          <td>
+            <select id="qa2">
+              <option>Non</option>
+              <option>Oui</option>
+            </select>
+          </td>
+        </tr>
+
+      </table>
+    </div>
+
+    <div class="block">
+      <h2>Signature</h2>
+
+      <canvas id="signatureAdulte" width="400" height="150"></canvas>
+
+      <br><br>
+
+      <button type="button" onclick="clearSignature('signatureAdulte')">
+        Effacer
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ================= ENFANT ================= -->
+
+  <div id="form-enfant" class="hidden">
+
+    <div class="block">
+      <h2>Identité enfant</h2>
+
+      <div class="grid">
+
+        <label>
+          Nom
+          <input type="text" id="nom_enfant">
+        </label>
+
+        <label>
+          Prénom
+          <input type="text" id="prenom_enfant">
+        </label>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="buttons">
+
+    <button onclick="generatePDF()">
+      Générer PDF
+    </button>
+
+    <button onclick="resetForm()">
+      Réinitialiser
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+
+  // ==========================
+  // Toggle adulte / enfant
+  // ==========================
+
+  document.querySelectorAll('input[name="formChoice"]').forEach(radio => {
+
+    radio.addEventListener('change', () => {
+
+      document
+        .getElementById('form-adulte')
+        .classList
+        .toggle('hidden', radio.value !== 'adulte' || !radio.checked);
+
+      document
+        .getElementById('form-enfant')
+        .classList
+        .toggle('hidden', radio.value !== 'enfant' || !radio.checked);
+
+    });
+
+  });
+
+  // ==========================
+  // SIGNATURE
+  // ==========================
+
+  function initCanvas(id) {
+
+    const canvas = document.getElementById(id);
+
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+
+    let drawing = false;
+
+    let lastX = 0;
+    let lastY = 0;
+
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+
+    function start(x, y) {
+      drawing = true;
+      lastX = x;
+      lastY = y;
+    }
+
+    function draw(x, y) {
+
+      if (!drawing) return;
+
+      ctx.beginPath();
+
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+
+      ctx.stroke();
+
+      lastX = x;
+      lastY = y;
+    }
+
+    function stop() {
+      drawing = false;
+    }
+
+    // souris
+
+    canvas.addEventListener('mousedown', e => {
+      start(e.offsetX, e.offsetY);
+    });
+
+    canvas.addEventListener('mousemove', e => {
+      draw(e.offsetX, e.offsetY);
+    });
+
+    canvas.addEventListener('mouseup', stop);
+    canvas.addEventListener('mouseout', stop);
+
+    // tactile
+
+    canvas.addEventListener('touchstart', e => {
+
+      e.preventDefault();
+
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+
+      start(
+        touch.clientX - rect.left,
+        touch.clientY - rect.top
+      );
+
+    });
+
+    canvas.addEventListener('touchmove', e => {
+
+      e.preventDefault();
+
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+
+      draw(
+        touch.clientX - rect.left,
+        touch.clientY - rect.top
+      );
+
+    });
+
+    canvas.addEventListener('touchend', stop);
+
+  }
+
+  initCanvas('signatureAdulte');
+
+  function clearSignature(id) {
+
+    const canvas = document.getElementById(id);
+
+    canvas
+      .getContext('2d')
+      .clearRect(0, 0, canvas.width, canvas.height);
+
+  }
+
+  // ==========================
+  // PDF
+  // ==========================
+
+  async function generatePDF() {
+
+    const { jsPDF } = window.jspdf;
+
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    let y = 20;
+
+    // ==========================
+    // TITRE
+    // ==========================
+
+    pdf.setFontSize(18);
+
+    pdf.text(
+      "Formulaire d'inscription",
+      105,
+      y,
+      { align: "center" }
+    );
+
+    y += 10;
+
+    pdf.setFontSize(14);
+
+    pdf.text(
+      "Hockey Club de Savenay 2025/2026",
+      105,
+      y,
+      { align: "center" }
+    );
+
+    y += 20;
+
+    // ==========================
+    // IDENTITE
+    // ==========================
+
+    const nom = document.getElementById("nom_adulte").value;
+    const prenom = document.getElementById("prenom_adulte").value;
+    const dateNaissance = document.getElementById("date_naissance_adulte").value;
+    const sexe = document.getElementById("sexe_adulte").value;
+    const adresse = document.getElementById("adresse_adulte").value;
+    const cp = document.getElementById("cp_adulte").value;
+    const ville = document.getElementById("ville_adulte").value;
+    const email = document.getElementById("email_adulte").value;
+    const tel = document.getElementById("tel_adulte").value;
+
+    pdf.setFontSize(13);
+
+    pdf.text("Informations personnelles", 15, y);
+
+    y += 8;
+
+    pdf.setFontSize(11);
+
+    pdf.text(`Nom : ${nom}`, 15, y);
+    y += 7;
+
+    pdf.text(`Prénom : ${prenom}`, 15, y);
+    y += 7;
+
+    pdf.text(`Date de naissance : ${dateNaissance}`, 15, y);
+    y += 7;
+
+    pdf.text(`Sexe : ${sexe}`, 15, y);
+    y += 7;
+
+    pdf.text(`Adresse : ${adresse}`, 15, y);
+    y += 7;
+
+    pdf.text(`Code Postal : ${cp}`, 15, y);
+    y += 7;
+
+    pdf.text(`Ville : ${ville}`, 15, y);
+    y += 7;
+
+    pdf.text(`Email : ${email}`, 15, y);
+    y += 7;
+
+    pdf.text(`Téléphone : ${tel}`, 15, y);
+
+    y += 15;
+
+    // ==========================
+    // CONSENTEMENTS
+    // ==========================
+
+    pdf.setFontSize(13);
+
+    pdf.text("Consentements", 15, y);
+
+    y += 8;
+
+    pdf.setFontSize(11);
+
+    pdf.text(
+      `Données personnelles : ${
+        document.getElementById("donnees").checked ? "Oui" : "Non"
+      }`,
+      15,
+      y
+    );
+
+    y += 7;
+
+    pdf.text(
+      `Charte du club : ${
+        document.getElementById("charte").checked ? "Oui" : "Non"
+      }`,
+      15,
+      y
+    );
+
+    y += 7;
+
+    pdf.text(
+      `Droit à l'image : ${
+        document.getElementById("droit_image").checked ? "Oui" : "Non"
+      }`,
+      15,
+      y
+    );
+
+    y += 15;
+
+    // ==========================
+    // QUESTIONNAIRE SANTE
+    // ==========================
+
+    pdf.setFontSize(13);
+
+    pdf.text("Questionnaire santé", 15, y);
+
+    y += 5;
+
+    pdf.autoTable({
+      startY: y,
+
+      head: [
+        ['Question', 'Réponse']
+      ],
+
+      body: [
+        [
+          'Douleur poitrine',
+          document.getElementById("qa1").value
+        ],
+
+        [
+          'Asthme',
+          document.getElementById("qa2").value
+        ]
+      ],
+
+      styles: {
+        fontSize: 10
+      }
+    });
+
+    y = pdf.lastAutoTable.finalY + 15;
+
+    // ==========================
+    // SIGNATURE
+    // ==========================
+
+    pdf.setFontSize(13);
+
+    pdf.text("Signature", 15, y);
+
+    y += 5;
+
+    const canvas = document.getElementById("signatureAdulte");
+
+    const imgData = canvas.toDataURL("image/png");
+
+    pdf.addImage(
+      imgData,
+      'PNG',
+      15,
+      y,
+      60,
+      25
+    );
+
+    // ==========================
+    // SAUVEGARDE
+    // ==========================
+
+    const filename =
+      `inscription_${nom}_${prenom}.pdf`;
+
+    pdf.save(filename);
+
+  }
+
+  // ==========================
+  // RESET
+  // ==========================
+
+  function resetForm() {
+
+    document
+      .querySelectorAll("input")
+      .forEach(input => {
+
+        if (
+          input.type === "checkbox" ||
+          input.type === "radio"
+        ) {
+          input.checked = false;
+        }
+        else {
+          input.value = "";
+        }
+
+      });
+
+    clearSignature('signatureAdulte');
+
+  }
+
+</script>
+
+</body>
+</html>

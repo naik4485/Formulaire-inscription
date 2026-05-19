@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription - Hockey Club de Savenay</title>
+  <link rel="stylesheet" href="style1.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="logo.png" alt="Logo Hockey Club de Savenay" class="logo">
+		<h1>Formulaire d'inscription<BR>Hockey Club de Savenay (2025/2026)</h1>
+    </div>
+
+<!-- Sélecteur adulte/enfant -->
+<div class="form-selector">
+  <label><input type="radio" name="formChoice" value="adulte" checked> Formulaire adulte</label>
+  <label><input type="radio" name="formChoice" value="enfant"> Formulaire enfant</label>
+</div>
+
+    <p class="intro">Ce formulaire est rempli et converti en PDF uniquement dans votre navigateur — aucune donnée n'est envoyée.</p>
+
+    <!-- ================= FORMULAIRE ADULTE ================= -->
+    <div id="form-adulte" class="form-block">
+      <div class="block">
+        <h2>Identité</h2>
+        <div class="grid">
+          <div><label>Nom<input type="text" id="nom_adulte"></label></div>
+          <div><label>Prénom<input type="text" id="prenom_adulte"></label></div>
+          <div><label>Date de naissance<input type="date"></label></div>
+          <div><label>Sexe<select><option>-</option><option>Homme</option><option>Femme</option></select></label></div>
+          <div class="full"><label>Adresse<input type="text"></label></div>
+          <div><label>Code Postal<input type="text"></label></div>
+          <div><label>Ville<input type="text"></label></div>
+          <div><label>Email<input type="email"></label></div>
+          <div><label>Téléphone<input type="tel"></label></div>
+        </div>
+      </div>
+
+<!-- Consentements -->
+<div class="block-consents">
+  <h2>Consentements</h2>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" id="donnees" name="donnees">
+      <div class="consent-text">
+        <strong>Données personnelles</strong>
+        <p>En cochant cette case et en soumettant ce formulaire, j'accepte que les informations saisies
+        soient utilisées par le Hockey Club de Savenay pour me recontacter dans le cadre de la relation qui découle de ma demande. Ces informations ne sont pas partagées ni revendues à des tiers.</p>
+      </div>
+    </label>
+  </div>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" id="charte" name="charte">
+      <div class="consent-text">
+        <strong>Charte du club</strong>
+        <p>En cochant cette case, je déclare avoir lu la charte du Club et m’engage à la respecter.</p>
+      </div>
+    </label>
+  </div>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" id="droit_image" name="droit_image">
+      <div class="consent-text">
+        <strong>Droit à l’image</strong>
+        <p>Pour les saisons sportives je suis licencié au club, l’association Hockey Club de Savenay aura l’occasion de prendre des photographies, des vidéos et des captations numériques.
+		<br>En conséquence de quoi et conformément aux dispositions relatives au droit à l’image, j’autorise le Hockey Club de Savenay à fixer, reproduire et communiquer au public les photographies,
+		<br>vidéos ou captations numériques prises dans le cadre associatif. Les images pourront être exploitées et utilisées directement par l’association sous toute forme et tous supports connus et inconnus à ce jour,
+		<br>pour un territoire illimité, sans limitation de durée, intégralement ou par extraits et notamment : presse, livret, supports d’enregistrement numérique, site internet, réseaux sociaux et tout dispositif de communication en général.
+		<br>Le bénéficiaire de l’autorisation s’interdit expressément de procéder à une exploitation des photographies susceptible de porter atteinte à la vie privée ou à la réputation, et d’utiliser les photographies,
+		<br>vidéos ou captations numériques de la présente, dans tout support ou toute exploitation préjudiciable.</p>
+      </div>
+    </label>
+  </div>
+</div>
+
+<!-- Questionnaire de santé -->
+      <div class="block">
+        <h2>Questionnaire santé adulte (pour un renouvellement de licence)</h2>
+		  <h3>Pour une nouvelle inscription, le certificat médical est obligatoire</h3>
+        <table class="health-table">
+          <thead><tr><th>Répondez aux questions suivantes par OUI ou par NON *</th><th>OUI</th><th>NON</th></tr></thead>
+          <tbody>
+		    <tr class="section-title" style="background-color:#e91e63"><td colspan="3" style="text-align:center;"><strong>Durant les 12 derniers mois</strong></td></tr>
+            <tr><td>Un membre de votre famille est-il décédé subitement d’une cause cardiaque ou inexpliqué ?</td><td><input type="radio" name="qa1" value="oui"></td><td><input type="radio" name="qa1" value="non"></td></tr>
+            <tr><td>Avez-vous ressenti une douleur dans la poitrine, des palpitations, un essoufflement inhabituel ou un malaise ?</td><td><input type="radio" name="qa2" value="oui"></td><td><input type="radio" name="qa2" value="non"></td></tr>
+            <tr><td>Avez-vous eu un épisode de respiration sifflante (asthme) ?</td><td><input type="radio" name="qa3" value="oui"></td><td><input type="radio" name="qa3" value="non"></td></tr>
+            <tr><td>Avous-vous eu une perte de connaissance ?</td><td><input type="radio" name="qa4" value="oui"></td><td><input type="radio" name="qa4" value="non"></td></tr>
+            <tr><td>Si vous avez arrêté le sport pendant 30 jours ou plus pour des raisons de santé, avez-vous repris sans l’accord d’un médecin ?</td><td><input type="radio" name="qa5" value="oui"></td><td><input type="radio" name="qa5" value="non"></td></tr>
+            <tr><td>Avez-vous débuté un traitement médical de longue durée (hors contraception et désensibilisation aux allergies) ?</td><td><input type="radio" name="qa6" value="oui"></td><td><input type="radio" name="qa6" value="non"></td></tr>
+            <tr class="section-title" style="background-color:#e91e63"><td colspan="3" style="text-align:center;"><strong>A ce jour</strong></td></tr>
+			<tr><td>Ressentez-vous une douleur, un manque de force ou une raideur suite à un problème osseux, articulaire ou musculaire (fracture, entorse, luxation, déchirure, tendinite, etc…) survenu durant les 12 derniers mois ?</td><td><input type="radio" name="qa7" value="oui"></td><td><input type="radio" name="qa7" value="non"></td></tr>
+            <tr><td>Votre pratique sportive est-elle interrompue pour des raisons de santé ?</td><td><input type="radio" name="qa8" value="oui"></td><td><input type="radio" name="qa8" value="non"></td></tr>
+            <tr><td>Pensez-vous avoir besoin d’un avis médical pour poursuivre votre pratique sportive ?</td><td><input type="radio" name="qa9" value="oui"></td><td><input type="radio" name="qa9" value="non"></td></tr>
+		  </tbody>
+        </table>
+       <div class="info-box">
+          <strong>Si vous avez répondu NON à toutes les questions :</strong> 
+		  <Br>
+		  Pas de certificat médical à fournir. Simplement attestez, selon les modalités prévues par la fédération, avoir répondu NON à toutes les questions lors de la demande de renouvellement de la licence.<br>
+          <Br>
+		  <strong>Si vous avez répondu OUI à une ou plusieurs questions :</strong> 
+		  <Br>
+		  Certificat médical à fournir. Consultez un médecin et présentez-lui ce questionnaire renseigné.
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Signature</h2>
+        <canvas id="signatureAdulte" width="400" height="150"></canvas>
+        <button type="button" onclick="clearSignature('signatureAdulte')">Effacer</button>
+      </div>
+      <div class="buttons">
+      <button class="btn-primary" type="button" onclick="generatePDF()">Générer PDF</button>
+      <button class="btn-secondary" type="button" onclick="resetForm()">Réinitialiser</button>
+    </div>
+	</div>
+    <!-- ================= FORMULAIRE ENFANT ================= -->
+    <div id="form-enfant" class="form-block hidden">
+      <div class="block">
+        <h2>Identité enfant</h2>
+        <div class="grid">
+          <div><label>Nom<input type="text" id="nom_enfant"></label></div>
+          <div><label>Prénom<input type="text" id="prenom_enfant"></label></div>
+          <div><label>Date de naissance<input type="date"></label></div>
+          <div><label>Sexe<select><option>-</option><option>Fille</option><option>Garçon</option></select></label></div>
+          <div class="full"><label>Adresse<input type="text"></label></div>
+          <div><label>Code Postal<input type="text"></label></div>
+          <div><label>Ville<input type="text"></label></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Responsable légal 1</h2>
+        <div class="grid">
+          <div><label>Nom<input type="text"></label></div>
+          <div><label>Prénom<input type="text"></label></div>
+          <div class="full"><label>Email<input type="email"></label></div>
+          <div><label>Téléphone<input type="tel"></label></div>
+        </div>
+      </div>
+	  
+      <div class="block">
+        <h2>Responsable légal 2</h2>
+        <div class="grid">
+          <div><label>Nom<input type="text"></label></div>
+          <div><label>Prénom<input type="text"></label></div>
+          <div class="full"><label>Email<input type="email"></label></div>
+          <div><label>Téléphone<input type="tel"></label></div>
+        </div>
+      </div>	  
+
+<div class="block-consents">
+  <h2>Consentements</h2>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" name="donnees_enfant">
+      <div class="consent-text">
+        <strong>Données personnelles</strong>
+        <p>J’accepte que les informations saisies soient utilisées uniquement pour l’inscription.</p>
+      </div>
+    </label>
+  </div>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" name="charte_enfant">
+      <div class="consent-text">
+        <strong>Charte du club</strong>
+        <p>Je déclare avoir lu la charte du club et m’engage à la respecter.</p>
+      </div>
+    </label>
+  </div>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" name="transport_enfant">
+      <div class="consent-text">
+        <strong>Transport</strong>
+        <p>J’autorise le transport de mon enfant par un responsable du club en cas de besoin.</p>
+      </div>
+    </label>
+  </div>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" name="image_enfant">
+      <div class="consent-text">
+        <strong>Droit à l’image</strong>
+        <p>J’autorise l’utilisation des photos/vidéos prises dans le cadre du club.</p>
+      </div>
+    </label>
+  </div>
+</div>
+
+
+      <div id="autorisation-urgence" class="block">
+  <h3>Autorisation urgence/accident</h3>
+  <p>
+    Je soussigné(e) M, Mme 
+    <input type="text" name="responsable_nom" style="width: 250px;">
+    , responsable légal(e) de l'enfant 
+    <input type="text" name="enfant_nom" style="width: 200px;">
+    , en catégorie 
+    <select name="categorie" style="width: 120px; display: inline-block;">
+           <option value="-">-</option>
+		   <option value="baby">Baby</option>
+           <option value="U8">U8</option>
+		   <option value="U8">U10</option>
+		   <option value="U8">U12</option>
+		   <option value="U8">U14</option>
+         </select>
+    ,<BR>autorise les responsables du club à prendre toutes mesures d'urgence nécessaires en cas d'accident.
+  </p>
+</div>
+
+       <!-- Questionnaire santé enfant -->
+      <div class="form-section">
+        <h3>Questionnaire de santé</h3>
+        <p>
+         Tu es : 
+         <select name="genre" style="width: 120px; display: inline-block;">
+           <option value="-">-</option>
+		   <option value="fille">Fille</option>
+           <option value="garcon">Garçon</option>
+         </select>
+        </p>
+         <p><b>Ton âge :</b> <input type="number" style="width:80px;"> ans</p>
+
+        <table class="health-table">
+          <thead><tr class="section-title"><th>#</th><th>Depuis l’an dernier :</th><th>OUI</th><th>NON</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Es tu allé(e) à l'hopital toute une journée ou plusieurs jours?</td><td><input type="radio" name="eq1" value="oui"></td><td><input type="radio" name="eq1" value="non"></td></tr>
+            <tr><td>2</td><td>As tu été opéré?</td><td><input type="radio" name="eq2" value="oui"></td><td><input type="radio" name="eq2" value="non"></td></tr>
+            <tr><td>3</td><td>As tu beaucoup plus grandi que les autres années?</td><td><input type="radio" name="eq3" value="oui"></td><td><input type="radio" name="eq3" value="non"></td></tr>
+            <tr><td>4</td><td>As tu beaucoup maigri ou grossi?</td><td><input type="radio" name="eq4" value="oui"></td><td><input type="radio" name="eq4" value="non"></td></tr>
+            <tr><td>5</td><td>As tu eu la tête qui tourne pendant un effort?</td><td><input type="radio" name="eq5" value="oui"></td><td><input type="radio" name="eq5" value="non"></td></tr>
+            <tr><td>6</td><td>As tu perdu connaissance ou es tu tombé sans te souvenir de ce qui s'était passé?</td><td><input type="radio" name="eq6" value="oui"></td><td><input type="radio" name="eq6" value="non"></td></tr>
+            <tr><td>7</td><td>As tu reçu un ou plusieurs chocs violents qui t'ont obligé à interrompre un moment une séance de sport?</td><td><input type="radio" name="eq7" value="oui"></td><td><input type="radio" name="eq7" value="non"></td></tr>
+            <tr><td>8</td><td>As tu eu beaucoup de mal à respirer pendant un effort par rapport à d'habitude?</td><td><input type="radio" name="eq8" value="oui"></td><td><input type="radio" name="eq8" value="non"></td></tr>
+            <tr><td>9</td><td>As tu eu beaucoup de mal à respirer après un effort?</td><td><input type="radio" name="eq9" value="oui"></td><td><input type="radio" name="eq9" value="non"></td></tr>
+            <tr><td>10</td><td>As tu eu mal dans la poitrine ou des palpitations (le coeur qui bat très vite)?</td><td><input type="radio" name="eq10" value="oui"></td><td><input type="radio" name="eq10" value="non"></td></tr>
+            <tr><td>11</td><td>As tu commencé à prendre un nouveau médicament tous les jours et pour longtemps?</td><td><input type="radio" name="eq11" value="oui"></td><td><input type="radio" name="eq11" value="non"></td></tr>
+            <tr><td>12</td><td>As tu arrêté le sport à cause d'un problème de santé pendant un mois ou plus?</td><td><input type="radio" name="eq12" value="oui"></td><td><input type="radio" name="eq12" value="non"></td></tr>
+          </tbody>
+
+          <thead><tr class="section-title"><th>#</th><th>Depuis un certain temps (plus de 2 semaines) :</th><th>OUI</th><th>NON</th></tr></thead>
+          <tbody>
+            <tr><td>13</td><td>Te sens tu très fatigué(e)?</td><td><input type="radio" name="eq13" value="oui"></td><td><input type="radio" name="eq13" value="non"></td></tr>
+            <tr><td>14</td><td>As tu du mal à t'endormir ou te réveilles tu souvent dans la nuit?</td><td><input type="radio" name="eq14" value="oui"></td><td><input type="radio" name="eq14" value="non"></td></tr>
+            <tr><td>15</td><td>Sens tu que tu as moins faim? que tu manges moins?</td><td><input type="radio" name="eq15" value="oui"></td><td><input type="radio" name="eq15" value="non"></td></tr>
+            <tr><td>16</td><td>Te sens tu triste ou inquiet?</td><td><input type="radio" name="eq16" value="oui"></td><td><input type="radio" name="eq16" value="non"></td></tr>
+            <tr><td>17</td><td>Pleures tu plus souvent?</td><td><input type="radio" name="eq17" value="oui"></td><td><input type="radio" name="eq17" value="non"></td></tr>
+            <tr><td>18</td><td>Ressens tu une douleur ou un manque de force à cause d'une blessure que tu t'es fait cette année?</td><td><input type="radio" name="eq18" value="oui"></td><td><input type="radio" name="eq18" value="non"></td></tr>
+          </tbody>
+
+          <thead><tr class="section-title"><th>#</th><th>Aujourd’hui :</th><th>OUI</th><th>NON</th></tr></thead>
+          <tbody>
+            <tr><td>19</td><td>Penses tu quelquefois à arrêter de faire du sport ou à changer de sport?</td><td><input type="radio" name="eq19" value="oui"></td><td><input type="radio" name="eq19" value="non"></td></tr>
+            <tr><td>20</td><td>Penses tu avoir besoin de voir ton médecin pour continuer le sport?</td><td><input type="radio" name="eq20" value="oui"></td><td><input type="radio" name="eq20" value="non"></td></tr>
+            <tr><td>21</td><td>Souhaites tu signaler quelque chose de plus concernant ta santé?</td><td><input type="radio" name="eq21" value="oui"></td><td><input type="radio" name="eq21" value="non"></td></tr>
+          </tbody>
+
+          <thead><tr class="section-title"><th>#</th><th>Questions à faire remplir par tes parents :</th><th>OUI</th><th>NON</th></tr></thead>
+          <tbody>
+            <tr><td>22</td><td>Quelqu'un dans votre famille proche a t'il eu une maladie grave du coeur ou du cerveau, ou est il décédé subitement avant l'âge de 50 ans?</td><td><input type="radio" name="eq22" value="oui"></td><td><input type="radio" name="eq22" value="non"></td></tr>
+            <tr><td>23</td><td>Etes vous inquiet pour son poids? Trouvez vous qu'il se nourrit trop ou pas assez?</td><td><input type="radio" name="eq23" value="oui"></td><td><input type="radio" name="eq23" value="non"></td></tr>
+            <tr><td>24</td><td>Avez vous manqué l'examen de santé prévu à l'âge de votre enfant chez le médecin? (2ans, 3ans, 4ans, 5ans, entre 8 et 9ans, entre 11 et 13ans et entre 15 et 16ans.)</td><td><input type="radio" name="eq24" value="oui"></td><td><input type="radio" name="eq24" value="non"></td></tr>
+          </tbody>
+        </table>
+
+        <div class="info-box">
+          <b>Si tu as répondu NON à toutes les questions :</b> Pas de certificat médical à fournir.
+        </div>
+        <div class="info-box">
+          <b>Si tu as répondu OUI à une ou plusieurs questions :</b> Tu dois consulter un médecin pour qu'il t'examine et discute avec toi du sport qui te convient. Apporte-lui ce questionnaire rempli.
+        </div>
+      </div>
+
+      <div class="block">
+  <h2>Signatures</h2>
+  <div class="signatures-row">
+    
+    <div class="signature-col">
+      <p>Signature de l'enfant :</p>
+      <canvas id="signatureEnfant" width="300" height="120"></canvas>
+      <button type="button" onclick="clearSignature('signatureEnfant')">Effacer</button>
+    </div>
+
+    <div class="signature-col">
+      <p>Signature du responsable légal :</p>
+      <canvas id="signatureRL" width="300" height="120"></canvas>
+      <button type="button" onclick="clearSignature('signatureRL')">Effacer</button>
+    </div>
+
+  </div>
+</div>
+
+    <div class="buttons">
+    <button class="btn-primary" type="button" onclick="generatePDF()">Générer PDF</button>
+    <button class="btn-secondary" type="button" onclick="resetForm()">Réinitialiser</button>
+    </div>
+  </div>
+
+<script>
+  // Toggle form visibility
+  document.querySelectorAll('input[name="formChoice"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      document.getElementById('form-adulte').classList.toggle('hidden', radio.value !== 'adulte' || !radio.checked);
+      document.getElementById('form-enfant').classList.toggle('hidden', radio.value !== 'enfant' || !radio.checked);
+    });
+  });
+
+  // Signature handling (simple)
+  function initCanvas(id) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  let lastX = 0, lastY = 0;
+
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = "#000";
+
+  // -------- Souris --------
+  canvas.addEventListener('mousedown', (e) => {
+    drawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+  });
+  canvas.addEventListener('mouseup', () => drawing = false);
+  canvas.addEventListener('mouseout', () => drawing = false);
+  canvas.addEventListener('mousemove', (e) => {
+    if (!drawing) return;
+    drawLine(e.offsetX, e.offsetY);
+  });
+
+  // -------- Tactile (mobile) --------
+  canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // empêche le scroll
+    drawing = true;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    lastX = touch.clientX - rect.left;
+    lastY = touch.clientY - rect.top;
+  });
+  canvas.addEventListener('touchend', () => drawing = false);
+  canvas.addEventListener('touchcancel', () => drawing = false);
+  canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    if (!drawing) return;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    drawLine(x, y);
+  });
+
+  // -------- Fonction de tracé --------
+  function drawLine(x, y) {
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    [lastX, lastY] = [x, y];
+  }
+}
+  ['signatureAdulte','signatureEnfant','signatureRL'].forEach(initCanvas);
+
+  function clearSignature(id) {
+    const canvas = document.getElementById(id);
+    if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  
+// Génération PDF texte (plus de capture image)
+async function generatePDF() {
+try{
+const { jsPDF } = window.jspdf;
+const pdf = new jsPDF("p","mm","a4");
+let y=15;
+
+pdf.setFont("helvetica","bold");
+pdf.setFontSize(16);
+pdf.text("Formulaire d'inscription",105,y,{align:"center"});
+y+=8;
+pdf.text("Hockey Club de Savenay (2025/2026)",105,y,{align:"center"});
+y+=15;
+
+const selected=document.querySelector('input[name="formChoice"]:checked').value;
+const form=document.getElementById(selected==="adulte"?"form-adulte":"form-enfant");
+
+pdf.setFontSize(11);
+pdf.setFont("helvetica","normal");
+
+const fields=form.querySelectorAll('input:not([type=radio]):not([type=checkbox]), select');
+
+fields.forEach(f=>{
+ let label=f.closest("label")?.childNodes[0]?.textContent?.trim() || f.name || f.id || "Champ";
+ let value=f.value||"-";
+ if(y>270){pdf.addPage();y=15;}
+ pdf.text(`${label}: ${value}`,15,y);
+ y+=7;
+});
+
+const checks=form.querySelectorAll('input[type=checkbox]');
+if(checks.length){
+ y+=5;
+ pdf.setFont("helvetica","bold");
+ pdf.text("Consentements",15,y);
+ y+=7;
+ pdf.setFont("helvetica","normal");
+ checks.forEach(c=>{
+   let txt=c.closest(".consent-item")?.querySelector("strong")?.innerText || c.name;
+   if(y>270){pdf.addPage();y=15;}
+   pdf.text(`${txt}: ${c.checked?"Oui":"Non"}`,15,y);
+   y+=7;
+ });
+}
+
+const radios=[...new Set([...form.querySelectorAll('input[type=radio]')].map(r=>r.name))];
+if(radios.length){
+ pdf.addPage();
+ y=15;
+ pdf.setFont("helvetica","bold");
+ pdf.text("Questionnaire santé",15,y);
+ y+=10;
+ let rows=[];
+ radios.forEach(name=>{
+   const checked=document.querySelector(`input[name="${name}"]:checked`);
+   const question=checked?.closest("tr")?.querySelector("td")?.innerText || name;
+   rows.push([question,checked?.value||"-"]);
+ });
+ pdf.autoTable({
+   startY:y,
+   head:[["Question","Réponse"]],
+   body:rows,
+   styles:{fontSize:8}
+ });
+ y=pdf.lastAutoTable.finalY+10;
+}
+
+["signatureAdulte","signatureEnfant","signatureRL"].forEach(id=>{
+ const c=document.getElementById(id);
+ if(c){
+   const ctx=c.getContext("2d");
+   const pixels=ctx.getImageData(0,0,c.width,c.height).data;
+   const hasSign=pixels.some((v,i)=>i%4===3 && v!==0);
+   if(hasSign){
+      if(y>240){pdf.addPage();y=15;}
+      pdf.text("Signature :",15,y);
+      y+=5;
+      pdf.addImage(c.toDataURL("image/png"),"PNG",15,y,60,25);
+      y+=35;
+   }
+ }
+});
+
+const nom=(form.querySelectorAll('input[type=text]')[0]?.value||"nom").replace(/\s+/g,"_");
+const prenom=(form.querySelectorAll('input[type=text]')[1]?.value||"prenom").replace(/\s+/g,"_");
+pdf.save(`inscription_${selected}_${nom}_${prenom}.pdf`);
+}catch(e){console.error(e);alert(e);}
+}
+
+// Reset formulaire
+  function resetForm() {
+    document.querySelectorAll('input').forEach(input => {
+      if (input.type === 'checkbox' || input.type === 'radio') input.checked = false;
+      else input.value = '';
+    });
+    ['signatureAdulte','signatureEnfant','signatureRL'].forEach(clearSignature);
+  }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

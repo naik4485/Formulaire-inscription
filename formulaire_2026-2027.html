@@ -617,32 +617,94 @@ const checks=form.querySelectorAll(
 
 if(checks.length){
 
-title(
-"Consentements"
-);
+title("Consentements");
 
 checks.forEach(c=>{
 
-let txt=
-c.closest(
-".consent-item"
-)
-?.querySelector(
-"strong"
-)
+let bloc=c.closest(".consent-item");
+
+let titre=
+bloc?.querySelector("strong")
 ?.innerText
 ||
 c.name;
 
-checkbox(
-txt,
-c.checked
+let description=
+bloc?.querySelector("p")
+?.innerText
+||
+"";
+
+checkPage(20);
+
+// case cochée
+pdf.rect(
+margin,
+y-3,
+4,
+4
 );
+
+if(c.checked){
+
+pdf.line(
+margin,
+y-3,
+margin+4,
+y+1
+);
+
+pdf.line(
+margin+4,
+y-3,
+margin,
+y+1
+);
+
+}
+
+// titre
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
+pdf.setFontSize(10);
+
+pdf.text(
+`${titre} : ${c.checked ? "Oui" : "Non"}`,
+margin+8,
+y
+);
+
+y+=6;
+
+
+// texte explicatif avec retour automatique
+pdf.setFont(
+"helvetica",
+"normal"
+);
+
+pdf.setFontSize(8);
+
+const lignes=
+pdf.splitTextToSize(
+description,
+170
+);
+
+pdf.text(
+lignes,
+margin+8,
+y
+);
+
+y+=lignes.length*4+8;
 
 });
 
 }
-
 
 //-----------------------
 // QUESTIONNAIRE

@@ -380,93 +380,477 @@
   }
 
   
-// Génération PDF texte (plus de capture image)
+// Génération PDF texte
 async function generatePDF() {
-try{
+
+try {
+
 const { jsPDF } = window.jspdf;
 const pdf = new jsPDF("p","mm","a4");
-let y=15;
 
-pdf.setFont("helvetica","bold");
-pdf.setFontSize(16);
-pdf.text("Formulaire d'inscription",105,y,{align:"center"});
+let y = 15;
+const pageWidth = 210;
+const margin = 10;
+const contentWidth = 190;
+
+
+//-----------------------
+// OUTILS
+//-----------------------
+
+function checkPage(space=20){
+
+    if(y+space>280){
+        pdf.addPage();
+        y=15;
+    }
+}
+
+function title(text){
+
+    checkPage(15);
+
+    pdf.setFillColor(233,30,99);
+    pdf.rect(
+        margin,
+        y,
+        contentWidth,
+        10,
+        "F"
+    );
+
+    pdf.setTextColor(255);
+    pdf.setFontSize(14);
+    pdf.setFont("helvetica","bold");
+
+    pdf.text(
+        text,
+        margin+4,
+        y+7
+    );
+
+    pdf.setTextColor(0);
+
+    y+=15;
+}
+
+function field(label,value,x,width){
+
+    pdf.setFontSize(8);
+
+    pdf.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    pdf.text(
+        label,
+        x,
+        y
+    );
+
+    pdf.rect(
+        x,
+        y+2,
+        width,
+        8
+    );
+
+    pdf.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    pdf.text(
+        value || "-",
+        x+2,
+        y+7
+    );
+}
+
+function checkbox(label,checked){
+
+    checkPage();
+
+    pdf.rect(
+        margin,
+        y-3,
+        4,
+        4
+    );
+
+    if(checked){
+
+        pdf.line(
+            margin,
+            y-3,
+            margin+4,
+            y+1
+        );
+
+        pdf.line(
+            margin+4,
+            y-3,
+            margin,
+            y+1
+        );
+    }
+
+    pdf.text(
+        label,
+        margin+8,
+        y
+    );
+
+    y+=8;
+}
+
+
+//-----------------------
+// TITRE
+//-----------------------
+
+pdf.setFontSize(18);
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.text(
+    "Formulaire d'inscription",
+    105,
+    y,
+    {align:"center"}
+);
+
 y+=8;
-pdf.text("Hockey Club de Savenay (2026/2027)",105,y,{align:"center"});
+
+pdf.setFontSize(13);
+
+pdf.text(
+    "Hockey Club de Savenay (2026/2027)",
+    105,
+    y,
+    {align:"center"}
+);
+
 y+=15;
 
-const selected=document.querySelector('input[name="formChoice"]:checked').value;
-const form=document.getElementById(selected==="adulte"?"form-adulte":"form-enfant");
 
-pdf.setFontSize(11);
-pdf.setFont("helvetica","normal");
+//-----------------------
+// FORMULAIRE SELECTIONNE
+//-----------------------
 
-const fields=form.querySelectorAll('input:not([type=radio]):not([type=checkbox]), select');
+const selected=document.querySelector(
+'input[name="formChoice"]:checked'
+).value;
 
-fields.forEach(f=>{
- let label=f.closest("label")?.childNodes[0]?.textContent?.trim() || f.name || f.id || "Champ";
- let value=f.value||"-";
- if(y>270){pdf.addPage();y=15;}
- pdf.text(`${label}: ${value}`,15,y);
- y+=7;
-});
+const form=document.getElementById(
+selected==="adulte"
+?"form-adulte"
+:"form-enfant"
+);
 
-const checks=form.querySelectorAll('input[type=checkbox]');
+
+//-----------------------
+// IDENTITE
+//-----------------------
+
+title("Identité");
+
+const texts=form.querySelectorAll(
+'input[type=text],input[type=date],input[type=email],input[type=tel],select'
+);
+
+let index=0;
+
+for(let i=0;i<texts.length;i+=2){
+
+    checkPage();
+
+    let f1=texts[i];
+    let f2=texts[i+1];
+
+    let l1=f1?.closest("label")
+      ?.childNodes[0]
+      ?.textContent
+      ?.trim()
+      || f1?.name
+      || "Champ";
+
+    let l2=f2?.closest("label")
+      ?.childNodes[0]
+      ?.textContent
+      ?.trim()
+      || f2?.name
+      || "";
+
+    field(
+        l1,
+        f1?.value,
+        10,
+        85
+    );
+
+    if(f2){
+
+        field(
+            l2,
+            f2?.value,
+            105,
+            85
+        );
+
+    }
+
+    y+=15;
+}
+
+
+//-----------------------
+// CONSENTEMENTS
+//-----------------------
+
+const checks=form.querySelectorAll(
+'input[type=checkbox]'
+);
+
 if(checks.length){
- y+=5;
- pdf.setFont("helvetica","bold");
- pdf.text("Consentements",15,y);
- y+=7;
- pdf.setFont("helvetica","normal");
- checks.forEach(c=>{
-   let txt=c.closest(".consent-item")?.querySelector("strong")?.innerText || c.name;
-   if(y>270){pdf.addPage();y=15;}
-   pdf.text(`${txt}: ${c.checked?"Oui":"Non"}`,15,y);
-   y+=7;
- });
-}
 
-const radios=[...new Set([...form.querySelectorAll('input[type=radio]')].map(r=>r.name))];
-if(radios.length){
- pdf.addPage();
- y=15;
- pdf.setFont("helvetica","bold");
- pdf.text("Questionnaire santé",15,y);
- y+=10;
- let rows=[];
- radios.forEach(name=>{
-   const checked=document.querySelector(`input[name="${name}"]:checked`);
-   const question=checked?.closest("tr")?.querySelector("td")?.innerText || name;
-   rows.push([question,checked?.value||"-"]);
- });
- pdf.autoTable({
-   startY:y,
-   head:[["Question","Réponse"]],
-   body:rows,
-   styles:{fontSize:8}
- });
- y=pdf.lastAutoTable.finalY+10;
-}
+title(
+"Consentements"
+);
 
-["signatureAdulte","signatureEnfant","signatureRL"].forEach(id=>{
- const c=document.getElementById(id);
- if(c){
-   const ctx=c.getContext("2d");
-   const pixels=ctx.getImageData(0,0,c.width,c.height).data;
-   const hasSign=pixels.some((v,i)=>i%4===3 && v!==0);
-   if(hasSign){
-      if(y>240){pdf.addPage();y=15;}
-      pdf.text("Signature :",15,y);
-      y+=5;
-      pdf.addImage(c.toDataURL("image/png"),"PNG",15,y,60,25);
-      y+=35;
-   }
- }
+checks.forEach(c=>{
+
+let txt=
+c.closest(
+".consent-item"
+)
+?.querySelector(
+"strong"
+)
+?.innerText
+||
+c.name;
+
+checkbox(
+txt,
+c.checked
+);
+
 });
 
-const nom=(form.querySelectorAll('input[type=text]')[0]?.value||"nom").replace(/\s+/g,"_");
-const prenom=(form.querySelectorAll('input[type=text]')[1]?.value||"prenom").replace(/\s+/g,"_");
-pdf.save(`inscription_${selected}_${nom}_${prenom}.pdf`);
-}catch(e){console.error(e);alert(e);}
+}
+
+
+//-----------------------
+// QUESTIONNAIRE
+//-----------------------
+
+const radios=[
+...new Set(
+[
+...form.querySelectorAll(
+'input[type=radio]'
+)
+].map(
+r=>r.name
+)
+)
+];
+
+
+if(radios.length){
+
+pdf.addPage();
+
+y=15;
+
+title(
+"Questionnaire santé"
+);
+
+let rows=[];
+
+radios.forEach(name=>{
+
+const checked=
+document.querySelector(
+`input[name="${name}"]:checked`
+);
+
+const question=
+checked
+?.closest("tr")
+?.querySelector("td")
+?.innerText
+||
+name;
+
+rows.push([
+question,
+checked?.value
+|| "-"
+]);
+
+});
+
+
+pdf.autoTable({
+
+startY:y,
+
+head:[
+[
+"Question",
+"Réponse"
+]
+],
+
+body:rows,
+
+styles:{
+fontSize:8,
+cellPadding:2
+},
+
+headStyles:{
+fillColor:[
+233,
+30,
+99
+]
+},
+
+columnStyles:{
+
+0:{
+cellWidth:150
+},
+
+1:{
+cellWidth:30
+}
+
+}
+
+});
+
+y=
+pdf.lastAutoTable.finalY
++10;
+
+}
+
+
+//-----------------------
+// SIGNATURES
+//-----------------------
+
+[
+"signatureAdulte",
+"signatureEnfant",
+"signatureRL"
+]
+.forEach(id=>{
+
+const c=
+document.getElementById(id);
+
+if(!c)return;
+
+const ctx=
+c.getContext(
+"2d"
+);
+
+const pixels=
+ctx.getImageData(
+0,
+0,
+c.width,
+c.height
+).data;
+
+const hasSign=
+pixels.some(
+(v,i)=>
+i%4===3
+&&
+v!==0
+);
+
+if(hasSign){
+
+checkPage(
+45
+);
+
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
+pdf.text(
+"Signature",
+margin,
+y
+);
+
+y+=5;
+
+pdf.rect(
+margin,
+y,
+70,
+30
+);
+
+pdf.addImage(
+c.toDataURL(
+"image/png"
+),
+"PNG",
+margin+2,
+y+2,
+65,
+25
+);
+
+y+=40;
+
+}
+
+});
+
+
+//-----------------------
+// NOM FICHIER
+//-----------------------
+
+const nom=
+document.querySelector(
+'input[type=text]'
+)
+?.value
+||"nom";
+
+pdf.save(
+`inscription_${selected}_${nom}.pdf`
+);
+
+}
+catch(e){
+
+console.error(e);
+
+alert(
+e.message
+);
+
+}
+
 }
 
 // Reset formulaire

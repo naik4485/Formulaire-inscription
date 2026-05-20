@@ -507,35 +507,66 @@ function checkbox(label,checked){
 
 
 //-----------------------
-// TITRE
+// TITRE + LOGO
 //-----------------------
 
-pdf.setFontSize(18);
-pdf.setFont(
-    "helvetica",
-    "bold"
+const logo=document.querySelector(".logo");
+
+if(logo){
+
+try{
+
+pdf.addImage(
+logo.src,
+"PNG",
+10,
+8,
+25,
+25
 );
+
+}
+catch(e){
+
+console.log("Logo non chargé");
+
+}
+
+}
+
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
+pdf.setFontSize(18);
 
 pdf.text(
-    "Formulaire d'inscription",
-    105,
-    y,
-    {align:"center"}
+"Formulaire d'inscription",
+105,
+18,
+{align:"center"}
 );
-
-y+=8;
 
 pdf.setFontSize(13);
 
 pdf.text(
-    "Hockey Club de Savenay (2026/2027)",
-    105,
-    y,
-    {align:"center"}
+"Hockey Club de Savenay (2026/2027)",
+105,
+26,
+{align:"center"}
 );
 
-y+=15;
+pdf.setDrawColor(200);
 
+pdf.line(
+10,
+35,
+200,
+35
+);
+
+y=45;
 
 //-----------------------
 // FORMULAIRE SELECTIONNE
@@ -810,52 +841,53 @@ pdf.lastAutoTable.finalY
 // SIGNATURES
 //-----------------------
 
-[
-"signatureAdulte",
-"signatureEnfant",
-"signatureRL"
-]
-.forEach(id=>{
+const signatures = [
+{
+    id:"signatureAdulte",
+    titre:"Signature de l'adhérent"
+},
+{
+    id:"signatureEnfant",
+    titre:"Signature de l'enfant"
+},
+{
+    id:"signatureRL",
+    titre:"Signature du responsable légal"
+}
+];
 
-const c=
-document.getElementById(id);
+signatures.forEach(sig=>{
 
-if(!c)return;
+const c=document.getElementById(sig.id);
 
-const ctx=
-c.getContext(
-"2d"
-);
+if(!c) return;
 
-const pixels=
-ctx.getImageData(
+const ctx=c.getContext("2d");
+
+const pixels=ctx.getImageData(
 0,
 0,
 c.width,
 c.height
 ).data;
 
-const hasSign=
-pixels.some(
-(v,i)=>
-i%4===3
-&&
-v!==0
+const hasSign=pixels.some(
+(v,i)=>i%4===3 && v!==0
 );
 
 if(hasSign){
 
-checkPage(
-45
-);
+checkPage(45);
 
 pdf.setFont(
 "helvetica",
 "bold"
 );
 
+pdf.setFontSize(10);
+
 pdf.text(
-"Signature",
+sig.titre,
 margin,
 y
 );
@@ -870,9 +902,7 @@ y,
 );
 
 pdf.addImage(
-c.toDataURL(
-"image/png"
-),
+c.toDataURL("image/png"),
 "PNG",
 margin+2,
 y+2,

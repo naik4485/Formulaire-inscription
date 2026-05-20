@@ -398,10 +398,10 @@ const contentWidth = 198;
 // OUTILS
 //-----------------------
 function checkPage(space=20){
-    const limiteBas=292;
+    const limiteBas=298;
     if(y+space>limiteBas){
         pdf.addPage();
-        y=10;
+        y=8;
     }
 }
 
@@ -885,9 +885,9 @@ const signaturesValides = signatures.filter(sig=>{
 
 if(signaturesValides.length){
 
-    title("Signatures");
-
-    checkPage(50);
+    const hauteurBloc = 55;
+checkPage(hauteurBloc);
+title("Signatures");
 
     let x=margin;
 

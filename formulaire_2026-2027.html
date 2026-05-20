@@ -862,65 +862,82 @@ const signatures = [
 }
 ];
 
-signatures.forEach(sig=>{
+// garde uniquement celles réellement signées
+const signaturesValides = signatures.filter(sig=>{
 
-const c=document.getElementById(sig.id);
+    const c=document.getElementById(sig.id);
+    if(!c) return false;
 
-if(!c) return;
+    const ctx=c.getContext("2d");
 
-const ctx=c.getContext("2d");
+    const pixels=ctx.getImageData(
+        0,
+        0,
+        c.width,
+        c.height
+    ).data;
 
-const pixels=ctx.getImageData(
-0,
-0,
-c.width,
-c.height
-).data;
-
-const hasSign=pixels.some(
-(v,i)=>i%4===3 && v!==0
-);
-
-if(hasSign){
-
-checkPage(45);
-
-pdf.setFont(
-"helvetica",
-"bold"
-);
-
-pdf.setFontSize(10);
-
-pdf.text(
-sig.titre,
-margin,
-y
-);
-
-y+=5;
-
-pdf.rect(
-margin,
-y,
-70,
-30
-);
-
-pdf.addImage(
-c.toDataURL("image/png"),
-"PNG",
-margin+2,
-y+2,
-65,
-25
-);
-
-y+=40;
-
-}
+    return pixels.some(
+        (v,i)=>i%4===3 && v!==0
+    );
 
 });
+
+if(signaturesValides.length){
+
+    title("Signatures");
+
+    checkPage(50);
+
+    let x=margin;
+
+    signaturesValides.forEach((sig,index)=>{
+
+        const c=document.getElementById(sig.id);
+
+        // largeur dynamique selon le nombre
+        const largeurBloc=
+        signaturesValides.length===1
+        ? 80
+        : signaturesValides.length===2
+        ? 90
+        : 60;
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.setFontSize(9);
+
+        pdf.text(
+            sig.titre,
+            x,
+            y
+        );
+
+        pdf.rect(
+            x,
+            y+3,
+            largeurBloc,
+            30
+        );
+
+        pdf.addImage(
+            c.toDataURL("image/png"),
+            "PNG",
+            x+2,
+            y+5,
+            largeurBloc-4,
+            25
+        );
+
+        x += largeurBloc+5;
+
+    });
+
+    y+=40;
+}
 
 
 //-----------------------

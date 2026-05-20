@@ -390,19 +390,18 @@ const pdf = new jsPDF("p","mm","a4");
 
 let y = 15;
 const pageWidth = 210;
-const margin = 10;
-const contentWidth = 190;
+const margin = 6;
+const contentWidth = 198;
 
 
 //-----------------------
 // OUTILS
 //-----------------------
-
 function checkPage(space=20){
-
-    if(y+space>280){
+    const limiteBas=292;
+    if(y+space>limiteBas){
         pdf.addPage();
-        y=15;
+        y=10;
     }
 }
 
@@ -666,12 +665,24 @@ bloc?.querySelector("p")
 ||
 "";
 
-checkPage(20);
+// largeur plus grande => moins de retours à la ligne
+const lignes=
+pdf.splitTextToSize(
+description,
+180
+);
 
-// case cochée
+// Calcul réel de la hauteur nécessaire
+const hauteurBloc=
+8 + (lignes.length*3.5) + 6;
+
+// on ne change de page QUE si nécessaire
+checkPage(hauteurBloc);
+
+// case
 pdf.rect(
 margin,
-y-3,
+y-2.5,
 4,
 4
 );
@@ -680,14 +691,14 @@ if(c.checked){
 
 pdf.line(
 margin,
-y-3,
+y-2.5,
 margin+4,
 y+1
 );
 
 pdf.line(
 margin+4,
-y-3,
+y-2.5,
 margin,
 y+1
 );
@@ -700,18 +711,18 @@ pdf.setFont(
 "bold"
 );
 
-pdf.setFontSize(10);
+pdf.setFontSize(9);
 
 pdf.text(
-`${titre} : ${c.checked ? "Oui" : "Non"}`,
+`${titre} : ${c.checked ? "Oui":"Non"}`,
 margin+8,
 y
 );
 
-y+=6;
+y+=5;
 
 
-// texte explicatif avec retour automatique
+// description
 pdf.setFont(
 "helvetica",
 "normal"
@@ -719,19 +730,14 @@ pdf.setFont(
 
 pdf.setFontSize(8);
 
-const lignes=
-pdf.splitTextToSize(
-description,
-170
-);
-
 pdf.text(
 lignes,
 margin+8,
 y
 );
 
-y+=lignes.length*4+8;
+// espacement réduit
+y+=lignes.length*3.5+5;
 
 });
 

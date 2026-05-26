@@ -432,6 +432,7 @@ function title(text){
 
     checkPage(15);
 
+
     pdf.setFillColor(233,30,99);
     pdf.rect(
         margin,
@@ -527,6 +528,24 @@ function checkbox(label,checked){
     y+=8;
 }
 
+function formatDate(dateStr){
+
+    if(!dateStr) return "-";
+
+    const d = new Date(dateStr);
+
+    const jour = String(
+        d.getDate()
+    ).padStart(2,"0");
+
+    const mois = String(
+        d.getMonth()+1
+    ).padStart(2,"0");
+
+    const annee = d.getFullYear();
+
+    return `${jour}/${mois}/${annee}`;
+}
 
 //-----------------------
 // TITRE + LOGO
@@ -950,10 +969,11 @@ if(sig.id==="signatureRL"){
         "nomSignataire"
     )?.value || "-";
 
-    const dateSignature =
-    document.getElementById(
-        "dateSignature"
-    )?.value || "-";
+    const dateSignature = formatDate(
+document.getElementById(
+    "dateSignature"
+)?.value
+);
 
     pdf.setFont(
         "helvetica",
@@ -1005,15 +1025,53 @@ pdf.addImage(
 // NOM FICHIER
 //-----------------------
 
-const nom=
-document.querySelector(
-'input[type=text]'
-)
-?.value
-||"nom";
+//-----------------------
+// NOM FICHIER
+//-----------------------
+
+let nom = "";
+let prenom = "";
+
+if(selected==="adulte"){
+
+    nom=
+    document.getElementById(
+        "nom_adulte"
+    )?.value || "nom";
+
+    prenom=
+    document.getElementById(
+        "prenom_adulte"
+    )?.value || "prenom";
+
+}
+else{
+
+    nom=
+    document.getElementById(
+        "nom_enfant"
+    )?.value || "nom";
+
+    prenom=
+    document.getElementById(
+        "prenom_enfant"
+    )?.value || "prenom";
+
+}
+
+
+// nettoyage espaces / accents
+nom = nom
+.trim()
+.replace(/\s+/g,"-");
+
+prenom = prenom
+.trim()
+.replace(/\s+/g,"-");
+
 
 pdf.save(
-`inscription_${selected}_${nom}.pdf`
+`inscription_2026-2027_${prenom}.${nom}.pdf`
 );
 
 }

@@ -934,32 +934,70 @@ title("Signatures");
         pdf.setFontSize(9);
 
         pdf.text(
-            sig.titre,
-            x,
-            y
-        );
+    sig.titre,
+    x,
+    y
+);
 
-        pdf.rect(
-            x,
-            y+3,
-            largeurBloc,
-            30
-        );
+let decalage = 0;
 
-        pdf.addImage(
-            c.toDataURL("image/png"),
-            "PNG",
-            x+2,
-            y+5,
-            largeurBloc-4,
-            25
-        );
+
+// Cas spécifique responsable légal
+if(sig.id==="signatureRL"){
+
+    const nomSignataire =
+    document.getElementById(
+        "nomSignataire"
+    )?.value || "-";
+
+    const dateSignature =
+    document.getElementById(
+        "dateSignature"
+    )?.value || "-";
+
+    pdf.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    pdf.setFontSize(8);
+
+    pdf.text(
+        `Signataire : ${nomSignataire}`,
+        x,
+        y+6
+    );
+
+    pdf.text(
+        `Date : ${dateSignature}`,
+        x,
+        y+11
+    );
+
+    decalage = 10;
+}
+
+pdf.rect(
+    x,
+    y+5+decalage,
+    largeurBloc,
+    30
+);
+
+pdf.addImage(
+    c.toDataURL("image/png"),
+    "PNG",
+    x+2,
+    y+7+decalage,
+    largeurBloc-4,
+    25
+);
 
         x += largeurBloc+5;
 
     });
 
-    y+=40;
+    y+=55;
 }
 
 

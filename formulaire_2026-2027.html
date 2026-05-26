@@ -623,60 +623,87 @@ selected==="adulte"
 :"form-enfant"
 );
 
-
 //-----------------------
-// IDENTITE
+// IDENTITÉ
 //-----------------------
 
-title("Identité");
+const blocs = form.querySelectorAll(".block");
 
-const texts=form.querySelectorAll(
-'input[type=text],input[type=date],input[type=email],input[type=tel],select'
-);
+blocs.forEach(bloc=>{
 
-let index=0;
+    const titreBloc =
+    bloc.querySelector("h2")?.innerText;
 
-for(let i=0;i<texts.length;i+=2){
+    // on ignore Signature et Questionnaire
+    if(
+        !titreBloc ||
+        titreBloc.includes("Signature") ||
+        titreBloc.includes("Questionnaire")
+    ){
+        return;
+    }
 
-    checkPage();
+    // ajoute le titre du bloc
+    title(titreBloc);
 
-    let f1=texts[i];
-    let f2=texts[i+1];
-
-    let l1=f1?.closest("label")
-      ?.childNodes[0]
-      ?.textContent
-      ?.trim()
-      || f1?.name
-      || "Champ";
-
-    let l2=f2?.closest("label")
-      ?.childNodes[0]
-      ?.textContent
-      ?.trim()
-      || f2?.name
-      || "";
-
-    field(
-        l1,
-        f1?.value,
-        10,
-        85
+    const champs=bloc.querySelectorAll(
+    'input[type=text],input[type=date],input[type=email],input[type=tel],select'
     );
 
-    if(f2){
+    for(let i=0;i<champs.length;i+=2){
+
+        checkPage(20);
+
+        let f1=champs[i];
+        let f2=champs[i+1];
+
+        let l1=
+        f1?.closest("label")
+        ?.childNodes[0]
+        ?.textContent
+        ?.trim()
+        ||
+        f1?.name
+        ||
+        f1?.id
+        ||
+        "Champ";
+
+        let l2=
+        f2?.closest("label")
+        ?.childNodes[0]
+        ?.textContent
+        ?.trim()
+        ||
+        f2?.name
+        ||
+        f2?.id
+        ||
+        "";
 
         field(
-            l2,
-            f2?.value,
-            105,
+            l1,
+            f1?.value,
+            10,
             85
         );
 
+        if(f2){
+
+            field(
+                l2,
+                f2?.value,
+                105,
+                85
+            );
+
+        }
+
+        y+=15;
+
     }
 
-    y+=15;
-}
+});
 
 
 //-----------------------
@@ -1019,11 +1046,6 @@ pdf.addImage(
 
     y+=55;
 }
-
-
-//-----------------------
-// NOM FICHIER
-//-----------------------
 
 //-----------------------
 // NOM FICHIER

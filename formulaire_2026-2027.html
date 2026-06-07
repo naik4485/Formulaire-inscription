@@ -1004,6 +1004,29 @@ title("Signatures");
 
 let decalage = 0;
 
+		if(sig.id==="signatureAdulte"){
+
+    const dateSignatureAdulte = formatDate(
+        document.getElementById(
+            "dateSignatureAdulte"
+        )?.value
+    );
+
+    pdf.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    pdf.setFontSize(8);
+
+    pdf.text(
+        `Date : ${dateSignatureAdulte}`,
+        x,
+        y+6
+    );
+
+    decalage = 5;
+}
 
 // Cas spécifique responsable légal
 if(sig.id==="signatureRL"){
@@ -1043,7 +1066,7 @@ document.getElementById(
 
 pdf.rect(
     x,
-    y+5+decalage,
+    y+8+decalage,
     largeurBloc,
     30
 );
@@ -1052,7 +1075,7 @@ pdf.addImage(
     c.toDataURL("image/png"),
     "PNG",
     x+2,
-    y+7+decalage,
+    y+10+decalage,
     largeurBloc-4,
     25
 );

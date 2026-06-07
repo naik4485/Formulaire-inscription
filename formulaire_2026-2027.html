@@ -112,10 +112,22 @@
       </div>
 
       <div class="block">
-        <h2>Signature</h2>
-        <canvas id="signatureAdulte" width="400" height="150"></canvas>
-        <button type="button" onclick="clearSignature('signatureAdulte')">Effacer</button>
-      </div>
+  <h2>Signature</h2>
+
+  <p>Date de signature :</p>
+
+  <input type="date"
+         id="dateSignatureAdulte">
+
+  <br><br>
+
+  <canvas id="signatureAdulte" width="400" height="150"></canvas>
+
+  <button type="button"
+          onclick="clearSignature('signatureAdulte')">
+          Effacer
+  </button>
+</div>
       <div class="buttons">
       <button class="btn-primary" type="button" onclick="generatePDF()">Générer PDF</button>
       <button class="btn-secondary" type="button" onclick="resetForm()">Réinitialiser</button>
@@ -139,8 +151,8 @@
       <div class="block">
         <h2>Responsable légal 1</h2>
         <div class="grid">
-          <div><label>Nom<input type="text"></label></div>
-          <div><label>Prénom<input type="text"></label></div>
+          <div><label>Nom<input type="text" id="rl1_nom"></label></div>
+		  <div><label>Prénom<input type="text" id="rl1_prenom"></label></div>
           <div class="full"><label>Email<input type="email"></label></div>
           <div><label>Téléphone<input type="tel"></label></div>
         </div>
@@ -200,14 +212,14 @@
   </div>
 </div>
 
-
+<!--  Autorisation d'urgence -->
       <div id="autorisation-urgence" class="block">
   <h3>Autorisation urgence/accident</h3>
   <p>
     Je soussigné(e) M, Mme 
-    <input type="text" name="responsable_nom" style="width: 250px;">
+    <input type="text" name="responsable_nom" id="responsableUrgence" style="width: 250px;">
     , responsable légal(e) de l'enfant 
-    <input type="text" name="enfant_nom" style="width: 200px;">
+    <input type="text" name="enfant_nom" id="enfantUrgence" style="width: 200px;">
     , en catégorie 
     <select id="categorieEnfant" name="categorie" style="width: 120px; display: inline-block;">
       <option value="-">-</option>
@@ -1192,6 +1204,90 @@ document.addEventListener('DOMContentLoaded', () => {
         dateInput.addEventListener('change', calculerAgeEtCategorie);
     }
 
+});
+
+//Mise à jour auto des informations enfant et responsable
+function mettreAJourInformationsAutomatiques() {
+
+    const nomRL =
+        document.getElementById('rl1_nom')?.value || '';
+
+    const prenomRL =
+        document.getElementById('rl1_prenom')?.value || '';
+
+    const nomEnfant =
+        document.getElementById('nom_enfant')?.value || '';
+
+    const prenomEnfant =
+        document.getElementById('prenom_enfant')?.value || '';
+
+    const nomCompletRL =
+        `${prenomRL} ${nomRL}`.trim();
+
+    const nomCompletEnfant =
+        `${prenomEnfant} ${nomEnfant}`.trim();
+
+    const signataire =
+        document.getElementById('nomSignataire');
+
+    if(signataire){
+        signataire.value = nomCompletRL;
+    }
+
+    const urgenceResponsable =
+        document.getElementById('responsableUrgence');
+
+    if(urgenceResponsable){
+        urgenceResponsable.value = nomCompletRL;
+    }
+
+    const urgenceEnfant =
+        document.getElementById('enfantUrgence');
+
+    if(urgenceEnfant){
+        urgenceEnfant.value = nomCompletEnfant;
+    }
+}
+
+[
+    'rl1_nom',
+    'rl1_prenom',
+    'nom_enfant',
+    'prenom_enfant'
+].forEach(id => {
+
+    const champ = document.getElementById(id);
+
+    if(champ){
+        champ.addEventListener(
+            'input',
+            mettreAJourInformationsAutomatiques
+        );
+    }
+
+});
+//date du jour par défaut dans date de signature
+document.addEventListener('DOMContentLoaded', () => {
+
+    const aujourdHui = new Date();
+
+    const dateISO =
+        aujourdHui.getFullYear() + '-' +
+        String(aujourdHui.getMonth()+1).padStart(2,'0') + '-' +
+        String(aujourdHui.getDate()).padStart(2,'0');
+
+    const dateAdulte =
+        document.getElementById('dateSignatureAdulte');
+
+    if(dateAdulte){
+        dateAdulte.value = dateISO;
+    }
+	const dateSignatureRL =
+	    document.getElementById('dateSignature');
+	
+	if(dateSignatureRL){
+	    dateSignatureRL.value = dateISO;
+	}
 });
 </script>
 </body>

@@ -141,7 +141,7 @@
           <div><label>Nom<input type="text" id="nom_enfant"></label></div>
           <div><label>Prénom<input type="text" id="prenom_enfant"></label></div>
           <div><label>Date de naissance<input type="date" id="dateNaissanceEnfant"></label></div>
-          <div><label>Sexe<select><option>-</option><option>Fille</option><option>Garçon</option></select></label></div>
+          <div><label>Sexe<select id="sexeEnfant"><option>-</option><option>Fille</option><option>Garçon</option></select></label></div>
           <div class="full"><label>Adresse<input type="text"></label></div>
           <div><label>Code Postal<input type="text"></label></div>
           <div><label>Ville<input type="text"></label></div>
@@ -239,7 +239,7 @@
         <h3>Questionnaire de santé</h3>
         <p>
          Tu es : 
-         <select name="genre" style="width: 120px; display: inline-block;">
+         <select id="genreQuestionnaire" name="genre" style="width: 120px; display: inline-block;">
            <option value="-">-</option>
 		   <option value="fille">Fille</option>
            <option value="garcon">Garçon</option>
@@ -694,21 +694,25 @@ blocs.forEach(bloc=>{
         ||
         "";
 
-        field(
-            l1,
-            f1?.value,
-            10,
-            85
-        );
+	       field(
+	    l1,
+	    f1?.type === "date"
+	        ? formatDate(f1.value)
+	        : f1?.value,
+	    10,
+	    85
+	);
 
         if(f2){
 
-            field(
-                l2,
-                f2?.value,
-                105,
-                85
-            );
+	    	field(
+	    l2,
+	    f2?.type === "date"
+	        ? formatDate(f2.value)
+	        : f2?.value,
+	    105,
+	    85
+	);
 
         }
 
@@ -1247,6 +1251,20 @@ function mettreAJourInformationsAutomatiques() {
     if(urgenceEnfant){
         urgenceEnfant.value = nomCompletEnfant;
     }
+	const sexe =
+    document.getElementById('sexeEnfant')?.value || '-';
+
+	const genreQuestionnaire =
+	    document.getElementById('genreQuestionnaire');
+	
+	if (genreQuestionnaire) {
+	    genreQuestionnaire.value =
+	        sexe === 'Fille'
+	            ? 'fille'
+	            : sexe === 'Garçon'
+	                ? 'garcon'
+	                : '-';
+	}
 }
 
 [
@@ -1254,6 +1272,7 @@ function mettreAJourInformationsAutomatiques() {
     'rl1_prenom',
     'nom_enfant',
     'prenom_enfant'
+	'sexeEnfant'
 ].forEach(id => {
 
     const champ = document.getElementById(id);

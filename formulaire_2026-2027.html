@@ -1271,7 +1271,7 @@ function mettreAJourInformationsAutomatiques() {
     'rl1_nom',
     'rl1_prenom',
     'nom_enfant',
-    'prenom_enfant'
+    'prenom_enfant',
 	'sexeEnfant'
 ].forEach(id => {
 
@@ -1279,7 +1279,7 @@ function mettreAJourInformationsAutomatiques() {
 
     if(champ){
         champ.addEventListener(
-            'input',
+            'change',
             mettreAJourInformationsAutomatiques
         );
     }
@@ -1307,6 +1307,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	if(dateSignatureRL){
 	    dateSignatureRL.value = dateISO;
 	}
+	mettreAJourInformationsAutomatiques();
 });
 </script>
 </body>

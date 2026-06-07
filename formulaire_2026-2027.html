@@ -128,7 +128,7 @@
         <div class="grid">
           <div><label>Nom<input type="text" id="nom_enfant"></label></div>
           <div><label>Prénom<input type="text" id="prenom_enfant"></label></div>
-          <div><label>Date de naissance<input type="date"></label></div>
+          <div><label>Date de naissance<input type="date" id="dateNaissanceEnfant"></label></div>
           <div><label>Sexe<select><option>-</option><option>Fille</option><option>Garçon</option></select></label></div>
           <div class="full"><label>Adresse<input type="text"></label></div>
           <div><label>Code Postal<input type="text"></label></div>
@@ -209,14 +209,15 @@
     , responsable légal(e) de l'enfant 
     <input type="text" name="enfant_nom" style="width: 200px;">
     , en catégorie 
-    <select name="categorie" style="width: 120px; display: inline-block;">
-           <option value="-">-</option>
-		   <option value="baby">Baby</option>
-           <option value="U8">U8</option>
-		   <option value="U8">U10</option>
-		   <option value="U8">U12</option>
-		   <option value="U8">U14</option>
-         </select>
+    <select id="categorieEnfant" name="categorie" style="width: 120px; display: inline-block;">
+      <option value="-">-</option>
+      <option value="Baby">Baby</option>
+      <option value="U7">U7</option>
+      <option value="U9">U9</option>
+      <option value="U11">U11</option>
+      <option value="U13">U13</option>
+      <option value="U15">U15</option>
+    </select>
     ,<BR>autorise les responsables du club à prendre toutes mesures d'urgence nécessaires en cas d'accident.
   </p>
 </div>
@@ -232,7 +233,7 @@
            <option value="garcon">Garçon</option>
          </select>
         </p>
-         <p><b>Ton âge :</b> <input type="number" style="width:80px;"> ans</p>
+         <p><b>Ton âge :</b> <input type="number" id="ageEnfant" style="width:80px;" readonly> ans</p>
 
         <table class="health-table">
           <thead><tr class="section-title"><th>Depuis l’an dernier :</th><th>OUI</th><th>NON</th></tr></thead>
@@ -1115,18 +1116,83 @@ e.message
       if (input.type === 'checkbox' || input.type === 'radio') input.checked = false;
       else input.value = '';
     });
-    ['signatureAdulte','signatureEnfant','signatureRL'].forEach(clearSignature);
+['signatureAdulte','signatureEnfant','signatureRL'].forEach(clearSignature);
+
+initialiserQuestionnaires();
   }
+
+// Initialisation des questionnaires (tous à NON)  
+function initialiserQuestionnaires() {
+
+    document.querySelectorAll('input[type="radio"][value="non"]').forEach(radio => {
+        radio.checked = true;
+    });
+
+}
+
+document.addEventListener('DOMContentLoaded', initialiserQuestionnaires);  
+
+// Calcul de l'âge et de la catégorie en fonction de la date de naissance
+function calculerAgeEtCategorie() {
+
+    const dateInput = document.getElementById('dateNaissanceEnfant');
+
+    if (!dateInput) return;
+
+    const dateNaissance = new Date(dateInput.value);
+
+    if (isNaN(dateNaissance)) return;
+
+    const aujourdHui = new Date();
+
+    let age = aujourdHui.getFullYear() - dateNaissance.getFullYear();
+
+    const mois = aujourdHui.getMonth() - dateNaissance.getMonth();
+
+    if (
+        mois < 0 ||
+        (mois === 0 && aujourdHui.getDate() < dateNaissance.getDate())
+    ) {
+        age--;
+    }
+
+    document.getElementById('ageEnfant').value = age;
+
+    const annee = dateNaissance.getFullYear();
+
+    let categorie = "-";
+
+    if (annee >= 2020 && annee <= 2023) {
+        categorie = "Baby";
+    }
+    else if (annee >= 2018 && annee <= 2019) {
+        categorie = "U7";
+    }
+    else if (annee >= 2016 && annee <= 2017) {
+        categorie = "U9";
+    }
+    else if (annee >= 2014 && annee <= 2015) {
+        categorie = "U11";
+    }
+    else if (annee >= 2012 && annee <= 2013) {
+        categorie = "U13";
+    }
+    else if (annee >= 2010 && annee <= 2011) {
+        categorie = "U15";
+    }
+
+    document.getElementById('categorieEnfant').value = categorie;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const dateInput = document.getElementById('dateNaissanceEnfant');
+
+    if (dateInput) {
+        dateInput.addEventListener('change', calculerAgeEtCategorie);
+    }
+
+});
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-

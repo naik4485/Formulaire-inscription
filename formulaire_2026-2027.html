@@ -1158,8 +1158,20 @@ e.message
 ['signatureAdulte','signatureEnfant','signatureRL'].forEach(clearSignature);
 
 initialiserQuestionnaires();
-  }
+  
+const aujourdHui = new Date();
 
+const dateISO =
+    aujourdHui.getFullYear() + '-' +
+    String(aujourdHui.getMonth()+1).padStart(2,'0') + '-' +
+    String(aujourdHui.getDate()).padStart(2,'0');
+
+document.getElementById('dateSignature')?.setAttribute('value', dateISO);
+document.getElementById('dateSignatureAdulte')?.setAttribute('value', dateISO);
+
+document.getElementById('dateSignature')?.value = dateISO;
+document.getElementById('dateSignatureAdulte')?.value = dateISO;
+  }
 // Initialisation des questionnaires (tous à NON)  
 function initialiserQuestionnaires() {
 

@@ -344,12 +344,32 @@
 
 <script>
   // Toggle form visibility
-  document.querySelectorAll('input[name="formChoice"]').forEach(radio => {
+document.querySelectorAll('input[name="formChoice"]').forEach(radio => {
+
     radio.addEventListener('change', () => {
-      document.getElementById('form-adulte').classList.toggle('hidden', radio.value !== 'adulte' || !radio.checked);
-      document.getElementById('form-enfant').classList.toggle('hidden', radio.value !== 'enfant' || !radio.checked);
+
+        const adulte =
+            document.getElementById('form-adulte');
+
+        const enfant =
+            document.getElementById('form-enfant');
+
+        adulte.classList.toggle(
+            'hidden',
+            radio.value !== 'adulte' || !radio.checked
+        );
+
+        enfant.classList.toggle(
+            'hidden',
+            radio.value !== 'enfant' || !radio.checked
+        );
+
+        // Nettoyage des signatures
+        clearSignature('signatureAdulte');
+        clearSignature('signatureEnfant');
+        clearSignature('signatureRL');
     });
-  });
+});
 
   // Signature handling (simple)
   function initCanvas(id) {
@@ -930,19 +950,25 @@ pdf.lastAutoTable.finalY
 // SIGNATURES
 //-----------------------
 
-const signatures = [
-{
-    id:"signatureAdulte",
-    titre:"Signature de l'adhérent"
-},
-{
-    id:"signatureEnfant",
-    titre:"Signature de l'enfant"
-},
-{
-    id:"signatureRL",
-    titre:"Signature du responsable légal"
-}
+const signatures =
+selected === "adulte"
+?
+[
+    {
+        id:"signatureAdulte",
+        titre:"Signature de l'adhérent"
+    }
+]
+:
+[
+    {
+        id:"signatureEnfant",
+        titre:"Signature de l'enfant"
+    },
+    {
+        id:"signatureRL",
+        titre:"Signature du responsable légal"
+    }
 ];
 
 // garde uniquement celles réellement signées
@@ -1147,15 +1173,90 @@ e.message
 }
 
 // Reset formulaire
-  function resetForm() {
-    document.querySelectorAll('input').forEach(input => {
-      if (input.type === 'checkbox' || input.type === 'radio') input.checked = false;
-      else input.value = '';
-    });
-['signatureAdulte','signatureEnfant','signatureRL'].forEach(clearSignature);
+function resetForm() {
 
-initialiserQuestionnaires();
-  }
+    // Réinitialisation des champs
+    document.querySelectorAll('input').forEach(input => {
+
+        if (
+            input.type === 'checkbox' ||
+            input.type === 'radio'
+        ) {
+            input.checked = false;
+        }
+        else {
+            input.value = '';
+        }
+
+    });
+
+    // Réinitialisation des listes déroulantes
+    document.querySelectorAll('select').forEach(select => {
+        select.selectedIndex = 0;
+    });
+
+    // Effacement des signatures
+    clearSignature('signatureAdulte');
+    clearSignature('signatureEnfant');
+    clearSignature('signatureRL');
+
+    // Retour sur le formulaire adulte
+    document.querySelector(
+        'input[name="formChoice"][value="adulte"]'
+    ).checked = true;
+
+    document.getElementById(
+        'form-adulte'
+    ).classList.remove('hidden');
+
+    document.getElementById(
+        'form-enfant'
+    ).classList.add('hidden');
+
+    // Remise des questionnaires à NON
+    initialiserQuestionnaires();
+
+    // Remise de la date du jour
+    const aujourdHui = new Date();
+
+    const dateISO =
+        aujourdHui.getFullYear() + '-' +
+        String(aujourdHui.getMonth() + 1).padStart(2, '0') + '-' +
+        String(aujourdHui.getDate()).padStart(2, '0');
+
+    const dateAdulte =
+        document.getElementById('dateSignatureAdulte');
+
+    if (dateAdulte) {
+        dateAdulte.value = dateISO;
+    }
+
+    const dateRL =
+        document.getElementById('dateSignature');
+
+    if (dateRL) {
+        dateRL.value = dateISO;
+    }
+
+    // Remise à zéro des champs calculés
+    const age =
+        document.getElementById('ageEnfant');
+
+    if (age) {
+        age.value = '';
+    }
+
+    const categorie =
+        document.getElementById('categorieEnfant');
+
+    if (categorie) {
+        categorie.value = '-';
+    }
+
+    // Mise à jour des champs automatiques
+    mettreAJourInformationsAutomatiques();
+
+}
 
 // Initialisation des questionnaires (tous à NON)  
 function initialiserQuestionnaires() {

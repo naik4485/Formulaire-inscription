@@ -121,7 +121,7 @@
 
   <br><br>
 
-  <canvas id="signatureAdulte" width="400" height="150"></canvas>
+  <canvas id="signatureAdulte" width="420" height="150"></canvas>
 
   <button type="button"
           onclick="clearSignature('signatureAdulte')">
@@ -302,32 +302,29 @@
   <div class="signatures-row">
     
     <div class="signature-col">
+	  <p>Date de signature :</p>
+		<input type="date"
+         id="dateSignature">
       <p>Signature de l'enfant :</p>
-      <canvas id="signatureEnfant" width="300" height="120"></canvas>
-      <button type="button" onclick="clearSignature('signatureEnfant')">Effacer</button>
+      <canvas id="signatureEnfant" 
+		  width="420" 
+		  height="150"></canvas>
+		
+ <button type="button" 
+		  onclick="clearSignature('signatureEnfant')">Effacer</button>
     </div>
 
     <div class="signature-col">
-
   <p>Nom du responsable signataire :</p>
   <input type="text"
          id="nomSignataire"
          placeholder="Nom et prénom">
 
-  <p style="margin-top:10px;">
-      Date de signature :
-  </p>
-
-  <input type="date"
-         id="dateSignature">
-
-  <p style="margin-top:15px;">
-      Signature du responsable légal :
-  </p>
+  <p>Signature du responsable légal :</p>
 
   <canvas id="signatureRL"
-          width="300"
-          height="120"></canvas>
+          width="420"
+          height="150"></canvas>
 
   <button type="button"
           onclick="clearSignature('signatureRL')">

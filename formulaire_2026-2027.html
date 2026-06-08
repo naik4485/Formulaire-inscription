@@ -1192,65 +1192,6 @@ if(signaturesValides.length){
     }
 }
 
-// Cas spécifique responsable légal
-if(sig.id==="signatureRL"){
-
-    const nomSignataire =
-    document.getElementById(
-        "nomSignataire"
-    )?.value || "-";
-
-    const dateSignature = formatDate(
-document.getElementById(
-    "dateSignature"
-)?.value
-);
-
-    pdf.setFont(
-        "helvetica",
-        "normal"
-    );
-
-    pdf.setFontSize(8);
-
-    pdf.text(
-        `Signataire : ${nomSignataire}`,
-        x,
-        y+6
-    );
-
-    pdf.text(
-        `Date : ${dateSignature}`,
-        x,
-        y+11
-    );
-
-    decalage = 10;
-}
-
-pdf.rect(
-    x,
-    y+8+decalage,
-    largeurBloc,
-    30
-);
-
-pdf.addImage(
-    c.toDataURL("image/png"),
-    "PNG",
-    x+2,
-    y+10+decalage,
-    largeurBloc-4,
-    25
-);
-
-        x += largeurBloc+5;
-
-    });
-
-    y+=55;
-}
-
 //-----------------------
 // NOM FICHIER
 //-----------------------

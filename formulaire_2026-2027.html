@@ -464,13 +464,15 @@ function title(text){
 
 
     pdf.setFillColor(233,30,99);
-    pdf.rect(
-        margin,
-        y,
-        contentWidth,
-        10,
-        "F"
-    );
+    pdf.roundedRect(
+    margin,
+    y,
+    contentWidth,
+    10,
+    2,
+    2,
+    "F"
+);
 
     pdf.setTextColor(255);
     pdf.setFontSize(14);
@@ -585,59 +587,63 @@ const logo=document.querySelector(".logo");
 
 if(logo){
 
-try{
+    try{
 
-pdf.addImage(
-logo.src,
-"PNG",
-10,
-8,
-25,
-25
+        // Conserve les proportions du logo
+        pdf.addImage(
+            logo.src,
+            "PNG",
+            10,
+            8,
+            28,
+            28
+        );
+
+    }catch(e){
+        console.log("Logo non chargé");
+    }
+
+}
+
+// Bandeau titre
+pdf.setFillColor(255);
+
+pdf.rect(
+    45,
+    8,
+    155,
+    24,
+    "F"
 );
 
-}
-catch(e){
-
-console.log("Logo non chargé");
-
-}
-
-}
+pdf.setTextColor(233,30,99);
 
 pdf.setFont(
-"helvetica",
-"bold"
+    "helvetica",
+    "bold"
 );
 
 pdf.setFontSize(18);
 
 pdf.text(
-"Formulaire d'inscription",
-105,
-18,
-{align:"center"}
+    "HOCKEY CLUB DE SAVENAY",
+    122,
+    18,
+    {align:"center"}
 );
 
-pdf.setFontSize(13);
+pdf.setFontSize(11);
 
 pdf.text(
-"Hockey Club de Savenay (2026/2027)",
-105,
-26,
-{align:"center"}
+    "Formulaire d'inscription - Saison 2026 / 2027",
+    122,
+    26,
+    {align:"center"}
 );
 
-pdf.setDrawColor(200);
+pdf.setTextColor(0);
 
-pdf.line(
-10,
-35,
-200,
-35
-);
-
-y=45;
+y = 40;
 
 //-----------------------
 // FORMULAIRE SELECTIONNE
@@ -867,7 +873,7 @@ if(radios.length){
 
 pdf.addPage();
 
-y=15;
+y = 15;
 
 title(
 "Questionnaire santé"
@@ -913,8 +919,8 @@ head:[
 body:rows,
 
 styles:{
-fontSize:8,
-cellPadding:2
+fontSize:7,
+cellPadding:1.2
 },
 
 headStyles:{
@@ -928,11 +934,11 @@ fillColor:[
 columnStyles:{
 
 0:{
-cellWidth:150
+cellWidth:165
 },
 
 1:{
-cellWidth:30
+cellWidth:20
 }
 
 }
@@ -1236,7 +1242,24 @@ prenom = prenom
 .trim()
 .replace(/\s+/g,"-");
 
+const pageCount = pdf.getNumberOfPages();
 
+for(let i=1;i<=pageCount;i++){
+
+    pdf.setPage(i);
+
+    pdf.setFontSize(8);
+
+    pdf.setTextColor(120);
+
+    pdf.text(
+        `Hockey Club de Savenay - Page ${i}/${pageCount}`,
+        105,
+        292,
+        {align:"center"}
+    );
+
+}
 pdf.save(
 `inscription_2026-2027_${prenom}.${nom}.pdf`
 );

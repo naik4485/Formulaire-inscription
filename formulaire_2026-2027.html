@@ -994,61 +994,202 @@ const signaturesValides = signatures.filter(sig=>{
 
 if(signaturesValides.length){
 
-    const hauteurBloc = 55;
-checkPage(hauteurBloc);
-title("Signatures");
+    title("Signatures");
 
-    let x=margin;
+    // ==========================
+    // FORMULAIRE ENFANT
+    // ==========================
+    if(selected === "enfant"){
 
-    signaturesValides.forEach((sig,index)=>{
+        checkPage(80);
 
-        const c=document.getElementById(sig.id);
+        const sigEnfant =
+            document.getElementById("signatureEnfant");
 
-        // largeur dynamique selon le nombre
-        const largeurBloc=
-        signaturesValides.length===1
-        ? 80
-        : signaturesValides.length===2
-        ? 90
-        : 60;
+        const sigRL =
+            document.getElementById("signatureRL");
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+        const nomSignataire =
+            document.getElementById("nomSignataire")?.value || "-";
 
+        const dateSignature =
+            formatDate(
+                document.getElementById("dateSignature")?.value
+            );
+
+        // Ligne date + signataire
+        pdf.setFont("helvetica","bold");
         pdf.setFontSize(9);
 
         pdf.text(
-    sig.titre,
-    x,
-    y
-);
+            "Date de signature",
+            10,
+            y
+        );
 
-let decalage = 0;
+        pdf.text(
+            "Nom du responsable signataire",
+            105,
+            y
+        );
 
-		if(sig.id==="signatureAdulte"){
+        pdf.setFont("helvetica","normal");
 
-    const dateSignatureAdulte = formatDate(
-        document.getElementById(
-            "dateSignatureAdulte"
-        )?.value
-    );
+        pdf.rect(10,y+2,85,8);
+        pdf.rect(105,y+2,85,8);
 
-    pdf.setFont(
-        "helvetica",
-        "normal"
-    );
+        pdf.text(
+            dateSignature,
+            12,
+            y+7
+        );
 
-    pdf.setFontSize(8);
+        pdf.text(
+            nomSignataire,
+            107,
+            y+7
+        );
 
-    pdf.text(
-        `Date : ${dateSignatureAdulte}`,
-        x,
-        y+6
-    );
+        y += 18;
 
-    decalage = 5;
+        // Titres signatures
+        pdf.setFont("helvetica","bold");
+
+        pdf.text(
+            "Signature de l'enfant",
+            10,
+            y
+        );
+
+        pdf.text(
+            "Signature du responsable légal",
+            105,
+            y
+        );
+
+        // Cadres
+        pdf.rect(
+            10,
+            y+3,
+            85,
+            35
+        );
+
+        pdf.rect(
+            105,
+            y+3,
+            85,
+            35
+        );
+
+        // Signature enfant
+        if(sigEnfant){
+
+            pdf.addImage(
+                sigEnfant.toDataURL("image/png"),
+                "PNG",
+                12,
+                y+5,
+                81,
+                31
+            );
+
+        }
+
+        // Signature responsable
+        if(sigRL){
+
+            pdf.addImage(
+                sigRL.toDataURL("image/png"),
+                "PNG",
+                107,
+                y+5,
+                81,
+                31
+            );
+
+        }
+
+        y += 45;
+    }
+
+    // ==========================
+    // FORMULAIRE ADULTE
+    // ==========================
+    else{
+
+        const hauteurBloc = 55;
+
+        checkPage(hauteurBloc);
+
+        let x = margin;
+
+        signaturesValides.forEach((sig,index)=>{
+
+            const c =
+                document.getElementById(sig.id);
+
+            const largeurBloc = 80;
+
+            pdf.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            pdf.setFontSize(9);
+
+            pdf.text(
+                sig.titre,
+                x,
+                y
+            );
+
+            let decalage = 0;
+
+            const dateSignatureAdulte =
+                formatDate(
+                    document.getElementById(
+                        "dateSignatureAdulte"
+                    )?.value
+                );
+
+            pdf.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            pdf.setFontSize(8);
+
+            pdf.text(
+                `Date : ${dateSignatureAdulte}`,
+                x,
+                y+6
+            );
+
+            decalage = 5;
+
+            pdf.rect(
+                x,
+                y+8+decalage,
+                largeurBloc,
+                30
+            );
+
+            pdf.addImage(
+                c.toDataURL("image/png"),
+                "PNG",
+                x+2,
+                y+10+decalage,
+                largeurBloc-4,
+                25
+            );
+
+            x += largeurBloc + 5;
+
+        });
+
+        y += 55;
+    }
 }
 
 // Cas spécifique responsable légal

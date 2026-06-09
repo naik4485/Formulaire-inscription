@@ -1404,23 +1404,27 @@ function calculerAgeEtCategorie() {
 
     let categorie = "-";
 
-    if (annee >= 2020 && annee <= 2023) {
+    if (annee >= 2022 && annee <= 2023) {
         categorie = "Baby";
     }
-    else if (annee >= 2018 && annee <= 2019) {
+    else if (annee >= 2020 && annee <= 2021) {
         categorie = "U7";
     }
-    else if (annee >= 2016 && annee <= 2017) {
+    else if (annee >= 2018 && annee <= 2019) {
         categorie = "U9";
     }
-    else if (annee >= 2014 && annee <= 2015) {
+    else if (annee >= 2016 && annee <= 2017) {
         categorie = "U11";
     }
-    else if (annee >= 2012 && annee <= 2013) {
+    else if (annee >= 2014 && annee <= 2015) {
         categorie = "U13";
     }
-    else if (annee >= 2010 && annee <= 2011) {
+    else if (annee >= 2012 && annee <= 2013) {
         categorie = "U15";
+    }
+   else if (annee >= 2009 && annee <= 2011)
+{
+        categorie = "U18";
     }
 
     document.getElementById('categorieEnfant').value = categorie;

@@ -921,32 +921,6 @@ checkPage(120);
 title(
 "Questionnaire santé"
 );
-// Sexe et âge de l'enfant
-const genre =
-    document.getElementById("genreQuestionnaire")?.value || "-";
-
-const age =
-    document.getElementById("ageEnfant")?.value || "-";
-
-pdf.setFont("helvetica", "bold");
-pdf.setFontSize(10);
-
-pdf.text("Sexe :", 10, y);
-pdf.setFont("helvetica", "normal");
-pdf.text(
-    genre === "garcon" ? "Garçon" :
-    genre === "fille" ? "Fille" :
-    "-",
-    25,
-    y
-);
-
-pdf.setFont("helvetica", "bold");
-pdf.text("Âge :", 70, y);
-pdf.setFont("helvetica", "normal");
-pdf.text(`${age} ans`, 82, y);
-
-y += 8;
 	
 let rows=[];
 

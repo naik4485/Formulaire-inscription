@@ -875,9 +875,8 @@ if(selected === "enfant"){
     pdf.setFontSize(9);
 
     const texte =
-`Catégorie : ${categorie}
-Je soussigné(e) ${responsable}, responsable légal de ${enfant},autorise les responsables du Hockey Club de Savenay 
-à prendre toutes les mesures d'urgence nécessaires en cas d'accident.`;
+`Je soussigné(e) ${responsable}, responsable légal de ${enfant}, en catégorie ${categorie}, autorise les responsables 
+du Hockey Club de Savenay à prendre toutes les mesures d'urgence nécessaires en cas d'accident.`;
 
     const lignes = pdf.splitTextToSize(texte, 182);
 

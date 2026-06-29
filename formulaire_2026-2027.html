@@ -875,7 +875,7 @@ if(selected === "enfant"){
     pdf.setFontSize(9);
 
     const texte =
-`Je soussigné(e) ${responsable}, responsable légal de ${enfant}, en catégorie ${categorie}, autorise les responsables 
+`Je soussigné(e) M, Mme ${responsable}, responsable légal de ${enfant}, en catégorie ${categorie}, autorise les responsables 
 du Hockey Club de Savenay à prendre toutes les mesures d'urgence nécessaires en cas d'accident.`;
 
     const lignes = pdf.splitTextToSize(texte, 182);
@@ -921,7 +921,33 @@ checkPage(120);
 title(
 "Questionnaire santé"
 );
+// Sexe et âge de l'enfant
+const genre =
+    document.getElementById("genreQuestionnaire")?.value || "-";
 
+const age =
+    document.getElementById("ageEnfant")?.value || "-";
+
+pdf.setFont("helvetica", "bold");
+pdf.setFontSize(10);
+
+pdf.text("Sexe :", 10, y);
+pdf.setFont("helvetica", "normal");
+pdf.text(
+    genre === "garcon" ? "Garçon" :
+    genre === "fille" ? "Fille" :
+    "-",
+    25,
+    y
+);
+
+pdf.setFont("helvetica", "bold");
+pdf.text("Âge :", 70, y);
+pdf.setFont("helvetica", "normal");
+pdf.text(`${age} ans`, 82, y);
+
+y += 8;
+	
 let rows=[];
 
 radios.forEach(name=>{

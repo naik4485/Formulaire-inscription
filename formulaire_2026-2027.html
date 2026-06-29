@@ -852,7 +852,54 @@ y+=lignes.length*3.5+5;
 });
 
 }
+//-----------------------
+// AUTORISATION URGENCE
+//-----------------------
 
+if(selected === "enfant"){
+
+    checkPage(28);
+
+    title("Autorisation urgence / accident");
+
+    const responsable =
+        document.getElementById("responsableUrgence")?.value || "-";
+
+    const enfant =
+        document.getElementById("enfantUrgence")?.value || "-";
+
+    const categorie =
+        document.getElementById("categorieEnfant")?.value || "-";
+
+    pdf.setFont("helvetica","normal");
+    pdf.setFontSize(9);
+
+    const texte =
+`Je soussigné(e) ${responsable}, responsable légal de ${enfant},
+autorise les responsables du Hockey Club de Savenay à prendre toutes
+les mesures d'urgence nécessaires en cas d'accident.
+
+Catégorie : ${categorie}`;
+
+    const lignes = pdf.splitTextToSize(texte, 182);
+
+    pdf.roundedRect(
+        margin,
+        y,
+        190,
+        lignes.length * 4 + 8,
+        2,
+        2
+    );
+
+    pdf.text(
+        lignes,
+        margin + 4,
+        y + 6
+    );
+
+    y += lignes.length * 4 + 12;
+}
 //-----------------------
 // QUESTIONNAIRE
 //-----------------------
@@ -872,9 +919,7 @@ r=>r.name
 
 if(radios.length){
 
-pdf.addPage();
-
-y = 15;
+checkPage(120);
 
 title(
 "Questionnaire santé"

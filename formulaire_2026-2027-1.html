@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription - Hockey Club de Savenay</title>
+  <link rel="stylesheet" href="style1.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <style>
+    .hidden { display: none !important; }
+    #ecran-choix {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    #ecran-choix .choix-carte { max-width: 480px; }
+    #ecran-choix .choix-carte img { max-width: 140px; margin-bottom: 16px; }
+    #ecran-choix .choix-boutons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+    #ecran-choix .choix-boutons button {
+      padding: 16px 30px;
+      font-size: 1.05rem;
+      cursor: pointer;
+      border-radius: 8px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Écran de choix initial : adulte ou enfant -->
+  <div id="ecran-choix">
+    <div class="choix-carte">
+      <img src="logo.png" alt="Logo Hockey Club de Savenay" class="logo">
+      <h1>Formulaire d'inscription<BR>Hockey Club de Savenay (2026/2027)</h1>
+      <p>Veuillez d'abord choisir le type de formulaire à remplir :</p>
+      <div class="choix-boutons">
+        <button type="button" class="btn-primary" onclick="choisirTypeFormulaire('adulte')">Formulaire adulte</button>
+        <button type="button" class="btn-primary" onclick="choisirTypeFormulaire('enfant')">Formulaire enfant</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container hidden">
+    <div class="header">
+      <img src="logo.png" alt="Logo Hockey Club de Savenay" class="logo">
+		<h1>Formulaire d'inscription<BR>Hockey Club de Savenay (2026/2027)</h1>
+    </div>
+
+<!-- Sélecteur adulte/enfant -->
+<div class="form-selector">
+  <label><input type="radio" name="formChoice" value="adulte"checked> Formulaire adulte</label>
+  <label><input type="radio" name="formChoice" value="enfant"> Formulaire enfant</label>
+</div>
+
+    <p class="intro">Ce formulaire est rempli et converti en PDF uniquement dans votre navigateur — aucune donnée n'est envoyée.</p>
+
+    <!-- ================= FORMULAIRE ADULTE ================= -->
+    <div id="form-adulte" class="form-block">
+      <div class="block">
+        <h2>Identité</h2>
+        <div class="grid">
+          <div><label>Nom<input type="text" id="nom_adulte"></label></div>
+          <div><label>Prénom<input type="text" id="prenom_adulte"></label></div>
+          <div><label>Date de naissance<input type="date"></label></div>
+          <div><label>Sexe<select><option>-</option><option>Homme</option><option>Femme</option></select></label></div>
+          <div class="full"><label>Adresse<input type="text"></label></div>
+          <div><label>Code Postal<input type="text"></label></div>
+          <div><label>Ville<input type="text"></label></div>
+          <div><label>Email<input type="email"></label></div>
+          <div><label>Téléphone<input type="tel"></label></div>
+        </div>
+      </div>
+
+<!-- Consentements -->
+<div class="block-consents">
+  <h2>Consentements</h2>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" id="donnees" name="donnees">
+      <div class="consent-text">
+        <strong>Données personnelles</strong>
+        <p>En cochant cette case et en soumettant ce formulaire, j'accepte que les informations saisies
+        soient utilisées par le Hockey Club de Savenay pour me recontacter dans le cadre de la relation qui découle de ma demande. Ces informations ne sont pas partagées ni revendues à des tiers.</p>
+      </div>
+    </label>
+  </div>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" id="charte" name="charte">
+      <div class="consent-text">
+        <strong>Charte du club</strong>
+        <p>En cochant cette case, je déclare avoir lu la charte du Club et m’engage à la respecter.</p>
+      </div>
+    </label>
+  </div>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" id="droit_image" name="droit_image">
+      <div class="consent-text">
+        <strong>Droit à l’image</strong>
+        <p>Pour les saisons sportives je suis licencié au club, l’association Hockey Club de Savenay aura l’occasion de prendre des photographies, des vidéos et des captations numériques.
+		<br>En conséquence de quoi et conformément aux dispositions relatives au droit à l’image, j’autorise le Hockey Club de Savenay à fixer, reproduire et communiquer au public les photographies,
+		<br>vidéos ou captations numériques prises dans le cadre associatif. Les images pourront être exploitées et utilisées directement par l’association sous toute forme et tous supports connus et inconnus à ce jour,
+		<br>pour un territoire illimité, sans limitation de durée, intégralement ou par extraits et notamment : presse, livret, supports d’enregistrement numérique, site internet, réseaux sociaux et tout dispositif de communication en général.
+		<br>Le bénéficiaire de l’autorisation s’interdit expressément de procéder à une exploitation des photographies susceptible de porter atteinte à la vie privée ou à la réputation, et d’utiliser les photographies,
+		<br>vidéos ou captations numériques de la présente, dans tout support ou toute exploitation préjudiciable.</p>
+      </div>
+    </label>
+  </div>
+</div>
+
+<!-- Questionnaire de santé -->
+      <div class="block">
+        <h2>Questionnaire santé adulte (pour un renouvellement de licence)</h2>
+		  <h3>Pour une nouvelle inscription, le certificat médical est obligatoire</h3>
+        <table class="health-table">
+          <thead><tr><th>Répondez aux questions suivantes par OUI ou par NON *</th><th>OUI</th><th>NON</th></tr></thead>
+          <tbody>
+		    <tr class="section-title" style="background-color:#e91e63"><td colspan="3" style="text-align:center;"><strong>Durant les 12 derniers mois</strong></td></tr>
+            <tr><td>Un membre de votre famille est-il décédé subitement d’une cause cardiaque ou inexpliqué ?</td><td><input type="radio" name="qa1" value="oui"></td><td><input type="radio" name="qa1" value="non"></td></tr>
+            <tr><td>Avez-vous ressenti une douleur dans la poitrine, des palpitations, un essoufflement inhabituel ou un malaise ?</td><td><input type="radio" name="qa2" value="oui"></td><td><input type="radio" name="qa2" value="non"></td></tr>
+            <tr><td>Avez-vous eu un épisode de respiration sifflante (asthme) ?</td><td><input type="radio" name="qa3" value="oui"></td><td><input type="radio" name="qa3" value="non"></td></tr>
+            <tr><td>Avous-vous eu une perte de connaissance ?</td><td><input type="radio" name="qa4" value="oui"></td><td><input type="radio" name="qa4" value="non"></td></tr>
+            <tr><td>Si vous avez arrêté le sport pendant 30 jours ou plus pour des raisons de santé, avez-vous repris sans l’accord d’un médecin ?</td><td><input type="radio" name="qa5" value="oui"></td><td><input type="radio" name="qa5" value="non"></td></tr>
+            <tr><td>Avez-vous débuté un traitement médical de longue durée (hors contraception et désensibilisation aux allergies) ?</td><td><input type="radio" name="qa6" value="oui"></td><td><input type="radio" name="qa6" value="non"></td></tr>
+            <tr class="section-title" style="background-color:#e91e63"><td colspan="3" style="text-align:center;"><strong>A ce jour</strong></td></tr>
+			<tr><td>Ressentez-vous une douleur, un manque de force ou une raideur suite à un problème osseux, articulaire ou musculaire (fracture, entorse, luxation, déchirure, tendinite, etc…) survenu durant les 12 derniers mois ?</td><td><input type="radio" name="qa7" value="oui"></td><td><input type="radio" name="qa7" value="non"></td></tr>
+            <tr><td>Votre pratique sportive est-elle interrompue pour des raisons de santé ?</td><td><input type="radio" name="qa8" value="oui"></td><td><input type="radio" name="qa8" value="non"></td></tr>
+            <tr><td>Pensez-vous avoir besoin d’un avis médical pour poursuivre votre pratique sportive ?</td><td><input type="radio" name="qa9" value="oui"></td><td><input type="radio" name="qa9" value="non"></td></tr>
+		  </tbody>
+        </table>
+       <div class="info-box">
+          <strong>Si vous avez répondu NON à toutes les questions :</strong> 
+		  <Br>
+		  Pas de certificat médical à fournir. Simplement attestez, selon les modalités prévues par la fédération, avoir répondu NON à toutes les questions lors de la demande de renouvellement de la licence.<br>
+          <Br>
+		  <strong>Si vous avez répondu OUI à une ou plusieurs questions :</strong> 
+		  <Br>
+		  Certificat médical à fournir. Consultez un médecin et présentez-lui ce questionnaire renseigné.
+        </div>
+      </div>
+
+      <div class="block">
+  <h2>Signature</h2>
+
+  <p>Date de signature :</p>
+
+  <input type="date"
+         id="dateSignatureAdulte">
+
+  <br><br>
+
+  <canvas id="signatureAdulte" width="420" height="150"></canvas>
+
+  <button type="button"
+          onclick="clearSignature('signatureAdulte')">
+          Effacer
+  </button>
+</div>
+      <div class="buttons">
+      <button class="btn-primary" type="button" onclick="generatePDF()">Générer PDF</button>
+      <button class="btn-secondary" type="button" onclick="resetForm()">Réinitialiser</button>
+    </div>
+	</div>
+    <!-- ================= FORMULAIRE ENFANT ================= -->
+    <div id="form-enfant" class="form-block hidden">
+      <div class="block">
+        <h2>Identité enfant</h2>
+        <div class="grid">
+          <div><label>Nom<input type="text" id="nom_enfant"></label></div>
+          <div><label>Prénom<input type="text" id="prenom_enfant"></label></div>
+          <div><label>Date de naissance<input type="date" id="dateNaissanceEnfant"></label></div>
+          <div><label>Sexe<select id="sexeEnfant"><option>-</option><option>Fille</option><option>Garçon</option></select></label></div>
+          <div class="full"><label>Adresse<input type="text"></label></div>
+          <div><label>Code Postal<input type="text"></label></div>
+          <div><label>Ville<input type="text"></label></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Responsable légal 1</h2>
+        <div class="grid">
+          <div><label>Nom<input type="text" id="rl1_nom"></label></div>
+		  <div><label>Prénom<input type="text" id="rl1_prenom"></label></div>
+          <div class="full"><label>Email<input type="email"></label></div>
+          <div><label>Téléphone<input type="tel"></label></div>
+        </div>
+      </div>
+	  
+      <div class="block">
+        <h2>Responsable légal 2</h2>
+        <div class="grid">
+          <div><label>Nom<input type="text"></label></div>
+          <div><label>Prénom<input type="text"></label></div>
+          <div class="full"><label>Email<input type="email"></label></div>
+          <div><label>Téléphone<input type="tel"></label></div>
+        </div>
+      </div>	  
+
+<div class="block-consents">
+  <h2>Consentements</h2>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" name="donnees_enfant">
+      <div class="consent-text">
+        <strong>Données personnelles</strong>
+        <p>J’accepte que les informations saisies soient utilisées uniquement pour l’inscription.</p>
+      </div>
+    </label>
+  </div>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" name="charte_enfant">
+      <div class="consent-text">
+        <strong>Charte du club</strong>
+        <p>Je déclare avoir lu la charte du club et m’engage à la respecter.</p>
+      </div>
+    </label>
+  </div>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" name="transport_enfant">
+      <div class="consent-text">
+        <strong>Transport</strong>
+        <p>J’autorise le transport de mon enfant par un responsable du club en cas de besoin.</p>
+      </div>
+    </label>
+  </div>
+
+  <div class="consent-item">
+    <label class="consent-row">
+      <input type="checkbox" name="image_enfant">
+      <div class="consent-text">
+        <strong>Droit à l’image</strong>
+        <p>J’autorise l’utilisation des photos/vidéos prises dans le cadre du club.</p>
+      </div>
+    </label>
+  </div>
+</div>
+
+<!--  Autorisation d'urgence -->
+      <div id="autorisation-urgence" class="block">
+  <h3>Autorisation urgence/accident</h3>
+  <p>
+    Je soussigné(e) M, Mme 
+    <input type="text" name="responsable_nom" id="responsableUrgence" style="width: 250px;">
+    , responsable légal(e) de l'enfant 
+    <input type="text" name="enfant_nom" id="enfantUrgence" style="width: 200px;">
+    , en catégorie 
+    <select id="categorieEnfant" name="categorie" style="width: 120px; display: inline-block;">
+      <option value="-">-</option>
+      <option value="Baby">Baby</option>
+      <option value="U7">U7</option>
+      <option value="U9">U9</option>
+      <option value="U11">U11</option>
+      <option value="U13">U13</option>
+      <option value="U15">U15</option>
+      <option value="U18">U18</option>
+    </select>
+    ,<BR>autorise les responsables du club à prendre toutes mesures d'urgence nécessaires en cas d'accident.
+  </p>
+</div>
+
+       <!-- Questionnaire santé enfant -->
+      <div class="form-section">
+        <h3>Questionnaire de santé</h3>
+        <p>
+         Tu es : 
+         <select id="genreQuestionnaire" name="genre" style="width: 120px; display: inline-block;">
+           <option value="-">-</option>
+		   <option value="fille">Fille</option>
+           <option value="garcon">Garçon</option>
+         </select>
+        </p>
+         <p><b>Ton âge :</b> <input type="number" id="ageEnfant" style="width:80px;" readonly> ans</p>
+
+        <table class="health-table">
+          <thead><tr class="section-title"><th>Depuis l’an dernier :</th><th>OUI</th><th>NON</th></tr></thead>
+          <tbody>
+            <tr><td>Es tu allé(e) à l'hopital toute une journée ou plusieurs jours?</td><td><input type="radio" name="eq1" value="oui"></td><td><input type="radio" name="eq1" value="non"></td></tr>
+            <tr><td>As tu été opéré?</td><td><input type="radio" name="eq2" value="oui"></td><td><input type="radio" name="eq2" value="non"></td></tr>
+            <tr><td>As tu beaucoup plus grandi que les autres années?</td><td><input type="radio" name="eq3" value="oui"></td><td><input type="radio" name="eq3" value="non"></td></tr>
+            <tr><td>As tu beaucoup maigri ou grossi?</td><td><input type="radio" name="eq4" value="oui"></td><td><input type="radio" name="eq4" value="non"></td></tr>
+            <tr><td>As tu eu la tête qui tourne pendant un effort?</td><td><input type="radio" name="eq5" value="oui"></td><td><input type="radio" name="eq5" value="non"></td></tr>
+            <tr><td>As tu perdu connaissance ou es tu tombé sans te souvenir de ce qui s'était passé?</td><td><input type="radio" name="eq6" value="oui"></td><td><input type="radio" name="eq6" value="non"></td></tr>
+            <tr><td>As tu reçu un ou plusieurs chocs violents qui t'ont obligé à interrompre un moment une séance de sport?</td><td><input type="radio" name="eq7" value="oui"></td><td><input type="radio" name="eq7" value="non"></td></tr>
+            <tr><td>As tu eu beaucoup de mal à respirer pendant un effort par rapport à d'habitude?</td><td><input type="radio" name="eq8" value="oui"></td><td><input type="radio" name="eq8" value="non"></td></tr>
+            <tr><td>As tu eu beaucoup de mal à respirer après un effort?</td><td><input type="radio" name="eq9" value="oui"></td><td><input type="radio" name="eq9" value="non"></td></tr>
+            <tr><td>As tu eu mal dans la poitrine ou des palpitations (le coeur qui bat très vite)?</td><td><input type="radio" name="eq10" value="oui"></td><td><input type="radio" name="eq10" value="non"></td></tr>
+            <tr><td>As tu commencé à prendre un nouveau médicament tous les jours et pour longtemps?</td><td><input type="radio" name="eq11" value="oui"></td><td><input type="radio" name="eq11" value="non"></td></tr>
+            <tr><td>As tu arrêté le sport à cause d'un problème de santé pendant un mois ou plus?</td><td><input type="radio" name="eq12" value="oui"></td><td><input type="radio" name="eq12" value="non"></td></tr>
+          </tbody>
+
+          <thead><tr class="section-title"><th>Depuis un certain temps (plus de 2 semaines) :</th><th>OUI</th><th>NON</th></tr></thead>
+          <tbody>
+            <tr><td>Te sens tu très fatigué(e)?</td><td><input type="radio" name="eq13" value="oui"></td><td><input type="radio" name="eq13" value="non"></td></tr>
+            <tr><td>As tu du mal à t'endormir ou te réveilles tu souvent dans la nuit?</td><td><input type="radio" name="eq14" value="oui"></td><td><input type="radio" name="eq14" value="non"></td></tr>
+            <tr><td>Sens tu que tu as moins faim? que tu manges moins?</td><td><input type="radio" name="eq15" value="oui"></td><td><input type="radio" name="eq15" value="non"></td></tr>
+            <tr><td>Te sens tu triste ou inquiet?</td><td><input type="radio" name="eq16" value="oui"></td><td><input type="radio" name="eq16" value="non"></td></tr>
+            <tr><td>Pleures tu plus souvent?</td><td><input type="radio" name="eq17" value="oui"></td><td><input type="radio" name="eq17" value="non"></td></tr>
+            <tr><td>Ressens tu une douleur ou un manque de force à cause d'une blessure que tu t'es fait cette année?</td><td><input type="radio" name="eq18" value="oui"></td><td><input type="radio" name="eq18" value="non"></td></tr>
+          </tbody>
+
+          <thead><tr class="section-title"><th>Aujourd’hui :</th><th>OUI</th><th>NON</th></tr></thead>
+          <tbody>
+            <tr><td>Penses tu quelquefois à arrêter de faire du sport ou à changer de sport?</td><td><input type="radio" name="eq19" value="oui"></td><td><input type="radio" name="eq19" value="non"></td></tr>
+            <tr><td>Penses tu avoir besoin de voir ton médecin pour continuer le sport?</td><td><input type="radio" name="eq20" value="oui"></td><td><input type="radio" name="eq20" value="non"></td></tr>
+            <tr><td>Souhaites tu signaler quelque chose de plus concernant ta santé?</td><td><input type="radio" name="eq21" value="oui"></td><td><input type="radio" name="eq21" value="non"></td></tr>
+          </tbody>
+
+          <thead><tr class="section-title"><th>Questions à faire remplir par tes parents :</th><th>OUI</th><th>NON</th></tr></thead>
+          <tbody>
+            <tr><td>Quelqu'un dans votre famille proche a t'il eu une maladie grave du coeur ou du cerveau, ou est il décédé subitement avant l'âge de 50 ans?</td><td><input type="radio" name="eq22" value="oui"></td><td><input type="radio" name="eq22" value="non"></td></tr>
+            <tr><td>Etes vous inquiet pour son poids? Trouvez vous qu'il se nourrit trop ou pas assez?</td><td><input type="radio" name="eq23" value="oui"></td><td><input type="radio" name="eq23" value="non"></td></tr>
+            <tr><td>Avez vous manqué l'examen de santé prévu à l'âge de votre enfant chez le médecin? (2ans, 3ans, 4ans, 5ans, entre 8 et 9ans, entre 11 et 13ans et entre 15 et 16ans.)</td><td><input type="radio" name="eq24" value="oui"></td><td><input type="radio" name="eq24" value="non"></td></tr>
+          </tbody>
+        </table>
+
+        <div class="info-box">
+          <b>Si tu as répondu NON à toutes les questions :</b> Pas de certificat médical à fournir.
+        </div>
+        <div class="info-box">
+          <b>Si tu as répondu OUI à une ou plusieurs questions :</b> Tu dois consulter un médecin pour qu'il t'examine et discute avec toi du sport qui te convient. Apporte-lui ce questionnaire rempli.
+        </div>
+      </div>
+
+      <div class="block">
+  <h2>Signatures</h2>
+  <div class="signatures-row">
+    
+    <div class="signature-col">
+	  <p>Date de signature :</p>
+		<input type="date"
+         id="dateSignature">
+      <p>Signature de l'enfant :</p>
+      <canvas id="signatureEnfant" 
+		  width="420" 
+		  height="150"></canvas>
+		
+ <button type="button" 
+		  onclick="clearSignature('signatureEnfant')">Effacer</button>
+    </div>
+
+    <div class="signature-col">
+  <p>Nom du responsable signataire :</p>
+  <input type="text"
+         id="nomSignataire"
+         placeholder="Nom et prénom">
+
+  <p>Signature du responsable légal :</p>
+
+  <canvas id="signatureRL"
+          width="420"
+          height="150"></canvas>
+
+  <button type="button"
+          onclick="clearSignature('signatureRL')">
+          Effacer
+  </button>
+
+</div>
+
+  </div>
+</div>
+
+    <div class="buttons">
+    <button class="btn-primary" type="button" onclick="generatePDF()">Générer PDF</button>
+    <button class="btn-secondary" type="button" onclick="resetForm()">Réinitialiser</button>
+    </div>
+  </div>
+
+<script>
+  // Choix initial adulte/enfant : masque l'écran de choix et ouvre le bon formulaire
+  function choisirTypeFormulaire(type) {
+
+      document.getElementById('ecran-choix').classList.add('hidden');
+
+      document.querySelector('.container').classList.remove('hidden');
+
+      const radio = document.querySelector(
+          `input[name="formChoice"][value="${type}"]`
+      );
+
+      if (radio) {
+          radio.checked = true;
+          radio.dispatchEvent(new Event('change'));
+      }
+
+      window.scrollTo(0, 0);
+  }
+
+  // Toggle form visibility
+document.querySelectorAll('input[name="formChoice"]').forEach(radio => {
+
+    radio.addEventListener('change', () => {
+
+        const adulte =
+            document.getElementById('form-adulte');
+
+        const enfant =
+            document.getElementById('form-enfant');
+
+        adulte.classList.toggle(
+            'hidden',
+            radio.value !== 'adulte' || !radio.checked
+        );
+
+        enfant.classList.toggle(
+            'hidden',
+            radio.value !== 'enfant' || !radio.checked
+        );
+
+        // Nettoyage des signatures
+        clearSignature('signatureAdulte');
+        clearSignature('signatureEnfant');
+        clearSignature('signatureRL');
+    });
+});
+
+  // Signature handling (simple)
+  function initCanvas(id) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  let lastX = 0, lastY = 0;
+
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = "#000";
+
+  // -------- Souris --------
+  canvas.addEventListener('mousedown', (e) => {
+    drawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+  });
+  canvas.addEventListener('mouseup', () => drawing = false);
+  canvas.addEventListener('mouseout', () => drawing = false);
+  canvas.addEventListener('mousemove', (e) => {
+    if (!drawing) return;
+    drawLine(e.offsetX, e.offsetY);
+  });
+
+  // -------- Tactile (mobile) --------
+  canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // empêche le scroll
+    drawing = true;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    lastX = touch.clientX - rect.left;
+    lastY = touch.clientY - rect.top;
+  });
+  canvas.addEventListener('touchend', () => drawing = false);
+  canvas.addEventListener('touchcancel', () => drawing = false);
+  canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    if (!drawing) return;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    drawLine(x, y);
+  });
+
+  // -------- Fonction de tracé --------
+  function drawLine(x, y) {
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    [lastX, lastY] = [x, y];
+  }
+}
+  ['signatureAdulte','signatureEnfant','signatureRL'].forEach(initCanvas);
+
+  function clearSignature(id) {
+    const canvas = document.getElementById(id);
+    if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  
+// Génération PDF texte
+async function generatePDF() {
+
+try {
+
+const { jsPDF } = window.jspdf;
+const pdf = new jsPDF("p","mm","a4");
+
+let y = 15;
+const pageWidth = 210;
+const margin = 6;
+const contentWidth = 198;
+
+
+//-----------------------
+// OUTILS
+//-----------------------
+function checkPage(space=20){
+    const limiteBas=298;
+    if(y+space>limiteBas){
+        pdf.addPage();
+        y=8;
+    }
+}
+
+function title(text){
+
+    checkPage(15);
+
+
+    pdf.setFillColor(233,30,99);
+    pdf.roundedRect(
+    margin,
+    y,
+    contentWidth,
+    7,
+    2,
+    2,
+    "F"
+);
+
+    pdf.setTextColor(255);
+    pdf.setFontSize(11);
+    pdf.setFont("helvetica","bold");
+
+    pdf.text(
+        text,
+        margin+4,
+        y+5
+    );
+
+    pdf.setTextColor(0);
+
+    y+=10;
+}
+
+function field(label,value,x,width){
+
+    pdf.setFontSize(8);
+
+    pdf.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    pdf.text(
+        label,
+        x,
+        y
+    );
+
+    pdf.rect(
+        x,
+        y+2,
+        width,
+        8
+    );
+
+    pdf.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    pdf.text(
+        value || "-",
+        x+2,
+        y+7
+    );
+}
+
+function checkbox(label,checked){
+
+    checkPage();
+
+    pdf.rect(
+        margin,
+        y-3,
+        4,
+        4
+    );
+
+    if(checked){
+
+        pdf.line(
+            margin,
+            y-3,
+            margin+4,
+            y+1
+        );
+
+        pdf.line(
+            margin+4,
+            y-3,
+            margin,
+            y+1
+        );
+    }
+
+    pdf.text(
+        label,
+        margin+8,
+        y
+    );
+
+    y+=8;
+}
+
+function formatDate(dateStr){
+
+    if(!dateStr) return "-";
+
+    const d = new Date(dateStr);
+
+    const jour = String(
+        d.getDate()
+    ).padStart(2,"0");
+
+    const mois = String(
+        d.getMonth()+1
+    ).padStart(2,"0");
+
+    const annee = d.getFullYear();
+
+    return `${jour}/${mois}/${annee}`;
+}
+
+//-----------------------
+// TITRE + LOGO
+//-----------------------
+
+const logo=document.querySelector(".logo");
+
+if(logo){
+
+    try{
+
+        // Conserve les proportions du logo
+        pdf.addImage(
+            logo.src,
+            "PNG",
+            10,
+            8,
+            50,
+            25
+        );
+
+    }catch(e){
+        console.log("Logo non chargé");
+    }
+
+}
+
+// Bandeau titre
+pdf.setFillColor(255);
+
+pdf.rect(
+    65,
+    8,
+    135,
+    24,
+    "F"
+);
+
+pdf.setTextColor(233,30,99);
+
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.setFontSize(18);
+
+pdf.text(
+    "HOCKEY CLUB DE SAVENAY",
+    132,  //alignement horizontal
+    18,
+    {align:"center"}
+);
+
+pdf.setFontSize(11);
+
+pdf.text(
+    "Formulaire d'inscription - Saison 2026 / 2027",
+    132,  //alignement horizontal
+    26,
+    {align:"center"}
+);
+
+pdf.setTextColor(0);
+
+y = 40;
+
+//-----------------------
+// FORMULAIRE SELECTIONNE
+//-----------------------
+
+const selected=document.querySelector(
+'input[name="formChoice"]:checked'
+).value;
+
+const form=document.getElementById(
+selected==="adulte"
+?"form-adulte"
+:"form-enfant"
+);
+
+//-----------------------
+// IDENTITÉ
+//-----------------------
+
+const blocs = form.querySelectorAll(".block");
+
+blocs.forEach(bloc=>{
+
+    const titreBloc =
+    bloc.querySelector("h2")?.innerText;
+
+    // on ignore Signature et Questionnaire
+    if(
+        !titreBloc ||
+        titreBloc.includes("Signature") ||
+        titreBloc.includes("Questionnaire")
+    ){
+        return;
+    }
+
+    // ajoute le titre du bloc
+    title(titreBloc);
+
+    const champs=bloc.querySelectorAll(
+    'input[type=text],input[type=date],input[type=email],input[type=tel],select'
+    );
+
+    for(let i=0;i<champs.length;i+=2){
+
+        checkPage(20);
+
+        let f1=champs[i];
+        let f2=champs[i+1];
+
+        let l1=
+        f1?.closest("label")
+        ?.childNodes[0]
+        ?.textContent
+        ?.trim()
+        ||
+        f1?.name
+        ||
+        f1?.id
+        ||
+        "Champ";
+
+        let l2=
+        f2?.closest("label")
+        ?.childNodes[0]
+        ?.textContent
+        ?.trim()
+        ||
+        f2?.name
+        ||
+        f2?.id
+        ||
+        "";
+
+	       field(
+	    l1,
+	    f1?.type === "date"
+	        ? formatDate(f1.value)
+	        : f1?.value,
+	    10,
+	    85
+	);
+
+        if(f2){
+
+	    	field(
+	    l2,
+	    f2?.type === "date"
+	        ? formatDate(f2.value)
+	        : f2?.value,
+	    105,
+	    85
+	);
+
+        }
+
+        y+=15;
+
+    }
+
+});
+
+
+//-----------------------
+// CONSENTEMENTS
+//-----------------------
+
+const checks=form.querySelectorAll(
+'input[type=checkbox]'
+);
+
+if(checks.length){
+
+title("Consentements");
+
+checks.forEach(c=>{
+
+let bloc=c.closest(".consent-item");
+
+let titre=
+bloc?.querySelector("strong")
+?.innerText
+||
+c.name;
+
+let description=
+bloc?.querySelector("p")
+?.innerText
+||
+"";
+
+// largeur plus grande => moins de retours à la ligne
+const lignes=
+pdf.splitTextToSize(
+description,
+180
+);
+
+// Calcul réel de la hauteur nécessaire
+const hauteurBloc=
+8 + (lignes.length*3.5) + 6;
+
+// on ne change de page QUE si nécessaire
+checkPage(hauteurBloc);
+
+// case
+pdf.rect(
+margin,
+y-2.5,
+4,
+4
+);
+
+if(c.checked){
+
+pdf.line(
+margin,
+y-2.5,
+margin+4,
+y+1
+);
+
+pdf.line(
+margin+4,
+y-2.5,
+margin,
+y+1
+);
+
+}
+
+// titre
+pdf.setFont(
+"helvetica",
+"bold"
+);
+
+pdf.setFontSize(9);
+
+pdf.text(
+`${titre} : ${c.checked ? "Oui":"Non"}`,
+margin+8,
+y
+);
+
+y+=5;
+
+
+// description
+pdf.setFont(
+"helvetica",
+"normal"
+);
+
+pdf.setFontSize(8);
+
+pdf.text(
+lignes,
+margin+8,
+y
+);
+
+// espacement réduit
+y+=lignes.length*3.5+5;
+
+});
+
+}
+//-----------------------
+// AUTORISATION URGENCE
+//-----------------------
+
+if(selected === "enfant"){
+
+    checkPage(28);
+
+    title("Autorisation urgence / accident");
+
+    const responsable =
+        document.getElementById("responsableUrgence")?.value || "-";
+
+    const enfant =
+        document.getElementById("enfantUrgence")?.value || "-";
+
+    const categorie =
+        document.getElementById("categorieEnfant")?.value || "-";
+
+    pdf.setFont("helvetica","normal");
+    pdf.setFontSize(9);
+
+    const texte =
+`Je soussigné(e) M, Mme ${responsable}, responsable légal de ${enfant}, en catégorie ${categorie}, autorise les responsables 
+du Hockey Club de Savenay à prendre toutes les mesures d'urgence nécessaires en cas d'accident.`;
+
+    const lignes = pdf.splitTextToSize(texte, 182);
+
+    pdf.roundedRect(
+        margin,
+        y,
+        190,
+        lignes.length * 4 + 8,
+        2,
+        2
+    );
+
+    pdf.text(
+        lignes,
+        margin + 4,
+        y + 6
+    );
+
+    y += lignes.length * 4 + 12;
+}
+//-----------------------
+// QUESTIONNAIRE
+//-----------------------
+
+const radios=[
+...new Set(
+[
+...form.querySelectorAll(
+'input[type=radio]'
+)
+].map(
+r=>r.name
+)
+)
+];
+
+
+if(radios.length){
+
+checkPage(120);
+
+title(
+"Questionnaire santé"
+);
+	
+let rows=[];
+
+radios.forEach(name=>{
+
+const checked=
+document.querySelector(
+`input[name="${name}"]:checked`
+);
+
+const question=
+checked
+?.closest("tr")
+?.querySelector("td")
+?.innerText
+||
+name;
+
+rows.push([
+question,
+checked?.value
+|| "-"
+]);
+
+});
+
+
+pdf.autoTable({
+
+startY:y,
+
+head:[
+[
+"Question",
+"Réponse"
+]
+],
+
+body:rows,
+
+styles:{
+fontSize:7,
+cellPadding:1.2
+},
+
+headStyles:{
+fillColor:[
+233,
+30,
+99
+]
+},
+
+columnStyles:{
+
+0:{
+cellWidth:165
+},
+
+1:{
+cellWidth:20
+}
+
+}
+
+});
+
+y=
+pdf.lastAutoTable.finalY
++10;
+
+}
+
+
+//-----------------------
+// SIGNATURES
+//-----------------------
+
+const signatures =
+selected === "adulte"
+?
+[
+    {
+        id:"signatureAdulte",
+        titre:"Signature de l'adhérent"
+    }
+]
+:
+[
+    {
+        id:"signatureEnfant",
+        titre:"Signature de l'enfant"
+    },
+    {
+        id:"signatureRL",
+        titre:"Signature du responsable légal"
+    }
+];
+
+// garde uniquement celles réellement signées
+const signaturesValides = signatures.filter(sig=>{
+
+    const c=document.getElementById(sig.id);
+    if(!c) return false;
+
+    const ctx=c.getContext("2d");
+
+    const pixels=ctx.getImageData(
+        0,
+        0,
+        c.width,
+        c.height
+    ).data;
+
+    return pixels.some(
+        (v,i)=>i%4===3 && v!==0
+    );
+
+});
+
+if(signaturesValides.length){
+
+    title("Signatures");
+
+    // ==========================
+    // FORMULAIRE ENFANT
+    // ==========================
+    if(selected === "enfant"){
+
+        checkPage(80);
+
+        const sigEnfant =
+            document.getElementById("signatureEnfant");
+
+        const sigRL =
+            document.getElementById("signatureRL");
+
+        const nomSignataire =
+            document.getElementById("nomSignataire")?.value || "-";
+
+        const dateSignature =
+            formatDate(
+                document.getElementById("dateSignature")?.value
+            );
+
+        // Ligne date + signataire
+        pdf.setFont("helvetica","bold");
+        pdf.setFontSize(9);
+
+        pdf.text(
+            "Date de signature",
+            10,
+            y
+        );
+
+        pdf.text(
+            "Nom du responsable signataire",
+            105,
+            y
+        );
+
+        pdf.setFont("helvetica","normal");
+
+        pdf.rect(10,y+2,85,8);
+        pdf.rect(105,y+2,85,8);
+
+        pdf.text(
+            dateSignature,
+            12,
+            y+7
+        );
+
+        pdf.text(
+            nomSignataire,
+            107,
+            y+7
+        );
+
+        y += 18;
+
+        // Titres signatures
+        pdf.setFont("helvetica","bold");
+
+        pdf.text(
+            "Signature de l'enfant",
+            10,
+            y
+        );
+
+        pdf.text(
+            "Signature du responsable légal",
+            105,
+            y
+        );
+
+        // Cadres
+        pdf.rect(
+            10,
+            y+3,
+            85,
+            28
+        );
+
+        pdf.rect(
+            105,
+            y+3,
+            85,
+            28
+        );
+
+        // Signature enfant
+        if(sigEnfant){
+
+            pdf.addImage(
+                sigEnfant.toDataURL("image/png"),
+                "PNG",
+                12,
+                y+5,
+                81,
+                24
+            );
+
+        }
+
+        // Signature responsable
+        if(sigRL){
+
+            pdf.addImage(
+                sigRL.toDataURL("image/png"),
+                "PNG",
+                107,
+                y+5,
+                81,
+                24
+            );
+
+        }
+
+        y += 45;
+    }
+
+    // ==========================
+    // FORMULAIRE ADULTE
+    // ==========================
+    else{
+
+        const hauteurBloc = 55;
+
+        checkPage(hauteurBloc);
+
+        let x = margin;
+
+        signaturesValides.forEach((sig,index)=>{
+
+            const c =
+                document.getElementById(sig.id);
+
+            const largeurBloc = 80;
+
+            pdf.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            pdf.setFontSize(9);
+
+            pdf.text(
+                sig.titre,
+                x,
+                y
+            );
+
+            let decalage = 0;
+
+            const dateSignatureAdulte =
+                formatDate(
+                    document.getElementById(
+                        "dateSignatureAdulte"
+                    )?.value
+                );
+
+            pdf.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            pdf.setFontSize(8);
+
+            pdf.text(
+                `Date : ${dateSignatureAdulte}`,
+                x,
+                y+6
+            );
+
+            decalage = 5;
+
+            pdf.rect(
+                x,
+                y+8+decalage,
+                largeurBloc,
+                30
+            );
+
+            pdf.addImage(
+                c.toDataURL("image/png"),
+                "PNG",
+                x+2,
+                y+10+decalage,
+                largeurBloc-4,
+                25
+            );
+
+            x += largeurBloc + 5;
+
+        });
+
+        y += 55;
+    }
+}
+
+//-----------------------
+// NOM FICHIER
+//-----------------------
+
+let nom = "";
+let prenom = "";
+
+if(selected==="adulte"){
+
+    nom=
+    document.getElementById(
+        "nom_adulte"
+    )?.value || "nom";
+
+    prenom=
+    document.getElementById(
+        "prenom_adulte"
+    )?.value || "prenom";
+
+}
+else{
+
+    nom=
+    document.getElementById(
+        "nom_enfant"
+    )?.value || "nom";
+
+    prenom=
+    document.getElementById(
+        "prenom_enfant"
+    )?.value || "prenom";
+
+}
+
+
+// nettoyage espaces / accents
+nom = nom
+.trim()
+.replace(/\s+/g,"-");
+
+prenom = prenom
+.trim()
+.replace(/\s+/g,"-");
+
+const pageCount = pdf.getNumberOfPages();
+
+for(let i=1;i<=pageCount;i++){
+
+    pdf.setPage(i);
+
+    pdf.setFontSize(8);
+
+    pdf.setTextColor(120);
+
+    pdf.text(
+        `Hockey Club de Savenay - Page ${i}/${pageCount}`,
+        105,
+        292,
+        {align:"center"}
+    );
+
+}
+pdf.save(
+`inscription_2026-2027_${prenom}.${nom}.pdf`
+);
+
+}
+catch(e){
+
+console.error(e);
+
+alert(
+e.message
+);
+
+}
+
+}
+
+// Reset formulaire
+function resetForm() {
+
+    // Réinitialisation des champs
+    document.querySelectorAll('input').forEach(input => {
+
+        if (
+            input.type === 'checkbox' ||
+            input.type === 'radio'
+        ) {
+            input.checked = false;
+        }
+        else {
+            input.value = '';
+        }
+
+    });
+
+    // Réinitialisation des listes déroulantes
+    document.querySelectorAll('select').forEach(select => {
+        select.selectedIndex = 0;
+    });
+
+    // Effacement des signatures
+    clearSignature('signatureAdulte');
+    clearSignature('signatureEnfant');
+    clearSignature('signatureRL');
+
+    // Retour sur le formulaire adulte
+    document.querySelector(
+        'input[name="formChoice"][value="adulte"]'
+    ).checked = true;
+
+    document.getElementById(
+        'form-adulte'
+    ).classList.remove('hidden');
+
+    document.getElementById(
+        'form-enfant'
+    ).classList.add('hidden');
+
+    // Remise des questionnaires à NON
+    initialiserQuestionnaires();
+
+    // Remise de la date du jour
+    const aujourdHui = new Date();
+
+    const dateISO =
+        aujourdHui.getFullYear() + '-' +
+        String(aujourdHui.getMonth() + 1).padStart(2, '0') + '-' +
+        String(aujourdHui.getDate()).padStart(2, '0');
+
+    const dateAdulte =
+        document.getElementById('dateSignatureAdulte');
+
+    if (dateAdulte) {
+        dateAdulte.value = dateISO;
+    }
+
+    const dateRL =
+        document.getElementById('dateSignature');
+
+    if (dateRL) {
+        dateRL.value = dateISO;
+    }
+
+    // Remise à zéro des champs calculés
+    const age =
+        document.getElementById('ageEnfant');
+
+    if (age) {
+        age.value = '';
+    }
+
+    const categorie =
+        document.getElementById('categorieEnfant');
+
+    if (categorie) {
+        categorie.value = '-';
+    }
+
+    // Mise à jour des champs automatiques
+    mettreAJourInformationsAutomatiques();
+
+}
+
+// Initialisation des questionnaires (tous à NON)  
+function initialiserQuestionnaires() {
+
+    document.querySelectorAll('input[type="radio"][value="non"]').forEach(radio => {
+        radio.checked = true;
+    });
+
+}
+
+document.addEventListener('DOMContentLoaded', initialiserQuestionnaires);  
+
+// Calcul de l'âge et de la catégorie en fonction de la date de naissance
+function calculerAgeEtCategorie() {
+
+    const dateInput = document.getElementById('dateNaissanceEnfant');
+
+    if (!dateInput) return;
+
+    const dateNaissance = new Date(dateInput.value);
+
+    if (isNaN(dateNaissance)) return;
+
+    const aujourdHui = new Date();
+
+    let age = aujourdHui.getFullYear() - dateNaissance.getFullYear();
+
+    const mois = aujourdHui.getMonth() - dateNaissance.getMonth();
+
+    if (
+        mois < 0 ||
+        (mois === 0 && aujourdHui.getDate() < dateNaissance.getDate())
+    ) {
+        age--;
+    }
+
+    document.getElementById('ageEnfant').value = age;
+
+    const annee = dateNaissance.getFullYear();
+
+    let categorie = "-";
+
+    if (annee >= 2022 && annee <= 2023) {
+        categorie = "Baby";
+    }
+    else if (annee >= 2020 && annee <= 2021) {
+        categorie = "U7";
+    }
+    else if (annee >= 2018 && annee <= 2019) {
+        categorie = "U9";
+    }
+    else if (annee >= 2016 && annee <= 2017) {
+        categorie = "U11";
+    }
+    else if (annee >= 2014 && annee <= 2015) {
+        categorie = "U13";
+    }
+    else if (annee >= 2012 && annee <= 2013) {
+        categorie = "U15";
+    }
+   else if (annee >= 2009 && annee <= 2011)
+{
+        categorie = "U18";
+    }
+
+    document.getElementById('categorieEnfant').value = categorie;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const dateInput = document.getElementById('dateNaissanceEnfant');
+
+    if (dateInput) {
+        dateInput.addEventListener('change', calculerAgeEtCategorie);
+    }
+
+});
+
+//Mise à jour auto des informations enfant et responsable
+function mettreAJourInformationsAutomatiques() {
+
+    const nomRL =
+        document.getElementById('rl1_nom')?.value || '';
+
+    const prenomRL =
+        document.getElementById('rl1_prenom')?.value || '';
+
+    const nomEnfant =
+        document.getElementById('nom_enfant')?.value || '';
+
+    const prenomEnfant =
+        document.getElementById('prenom_enfant')?.value || '';
+
+    const nomCompletRL =
+        `${prenomRL} ${nomRL}`.trim();
+
+    const nomCompletEnfant =
+        `${prenomEnfant} ${nomEnfant}`.trim();
+
+    const signataire =
+        document.getElementById('nomSignataire');
+
+    if(signataire){
+        signataire.value = nomCompletRL;
+    }
+
+    const urgenceResponsable =
+        document.getElementById('responsableUrgence');
+
+    if(urgenceResponsable){
+        urgenceResponsable.value = nomCompletRL;
+    }
+
+    const urgenceEnfant =
+        document.getElementById('enfantUrgence');
+
+    if(urgenceEnfant){
+        urgenceEnfant.value = nomCompletEnfant;
+    }
+	const sexe =
+    document.getElementById('sexeEnfant')?.value || '-';
+
+	const genreQuestionnaire =
+	    document.getElementById('genreQuestionnaire');
+	
+	if (genreQuestionnaire) {
+	    genreQuestionnaire.value =
+	        sexe === 'Fille'
+	            ? 'fille'
+	            : sexe === 'Garçon'
+	                ? 'garcon'
+	                : '-';
+	}
+}
+
+[
+    'rl1_nom',
+    'rl1_prenom',
+    'nom_enfant',
+    'prenom_enfant',
+	'sexeEnfant'
+].forEach(id => {
+
+    const champ = document.getElementById(id);
+
+    if(champ){
+        champ.addEventListener(
+            'change',
+            mettreAJourInformationsAutomatiques
+        );
+    }
+
+});
+//date du jour par défaut dans date de signature
+document.addEventListener('DOMContentLoaded', () => {
+
+    const aujourdHui = new Date();
+
+    const dateISO =
+        aujourdHui.getFullYear() + '-' +
+        String(aujourdHui.getMonth()+1).padStart(2,'0') + '-' +
+        String(aujourdHui.getDate()).padStart(2,'0');
+
+    const dateAdulte =
+        document.getElementById('dateSignatureAdulte');
+
+    if(dateAdulte){
+        dateAdulte.value = dateISO;
+    }
+	const dateSignatureRL =
+	    document.getElementById('dateSignature');
+	
+	if(dateSignatureRL){
+	    dateSignatureRL.value = dateISO;
+	}
+	mettreAJourInformationsAutomatiques();
+});
+</script>
+</body>
+</html>
